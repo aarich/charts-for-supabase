@@ -1,0 +1,17 @@
+{
+  "components": {
+    "Card": {
+      "meta": {},
+      "appearances": {
+        "outline": {
+          "mapping": {
+            "bodyPaddingHorizontal": 0,
+            "bodyPaddingVertical": 0,
+            "headerPaddingHorizontal": 0,
+            "headerPaddingVertical": 0
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "cli": {
+    "version": ">= 0.45.1"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal",
+      "ios": {
+        "simulator": true
+      },
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "production": {
+      "releaseChannel": "prod-1-0"
+    }
+  },
+  "submit": {
+    "production": {
+      "android": {
+        "serviceAccountKeyPath": "../intervals/pc-api-5006870031383457262-101-4afc423a918f.json"
+      },
+      "ios": {
+        "appleId": "arich@hmc.edu",
+        "ascAppId": "1612680145",
+        "appleTeamId": "8H27F27VW9"
+      }
+    }
+  }
+}

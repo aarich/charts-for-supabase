@@ -1,0 +1,33 @@
+import { QueryInfo, UpdateState } from '../../utils';
+import { TextField } from '../base';
+import EditModifiers from './EditModifiers';
+import EditQueryType from './EditQueryType';
+import EditReturnType from './EditReturnType';
+
+type Props = {
+  draft: QueryInfo;
+  onUpdate: UpdateState<QueryInfo>;
+};
+
+const EditQuery = ({ onUpdate, draft }: Props) => {
+  return (
+    <>
+      <TextField
+        label="Name"
+        value={draft.name}
+        onChangeText={(name) => onUpdate({ ...draft, name })}
+      />
+      <EditQueryType draft={draft} onUpdate={onUpdate} />
+      <EditReturnType
+        draft={draft.returnInfo}
+        onUpdate={(returnInfo) => onUpdate({ ...draft, returnInfo })}
+      />
+      <EditModifiers
+        draft={draft.modifiers}
+        onUpdate={(modifiers) => onUpdate({ ...draft, modifiers })}
+      />
+    </>
+  );
+};
+
+export default EditQuery;

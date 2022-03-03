@@ -1,0 +1,49 @@
+{
+  "expo": {
+    "name": "Charts",
+    "slug": "sbcharts",
+    "version": "1.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "sbcharts",
+    "userInterfaceStyle": "automatic",
+    "backgroundColor": "#222B45",
+    "platforms": ["android", "ios", "web"],
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#222B45"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 5000,
+      "enabled": true
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "buildNumber": "1",
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mrarich.charts",
+      "appStoreUrl": "https://apps.apple.com/app/apple-store/id1612680145?pt=117925864&ct=aj&mt=8",
+      "infoPlist": { "LSApplicationQueriesSchemes": ["twitter"] },
+      "config": { "usesNonExemptEncryption": false }
+    },
+    "android": {
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=rich.alex.charts",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/icon.png",
+        "backgroundColor": "#222B45"
+      },
+      "permissions": [
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "QUERY_ALL_PACKAGES"
+      ],
+      "package": "rich.alex.charts",
+      "versionCode": 1
+    },
+    "web": {
+      "favicon": "./assets/images/favicon.png",
+      "build": { "babel": { "include": ["@ui-kitten/components"] } }
+    }
+  }
+}
