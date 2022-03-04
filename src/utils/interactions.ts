@@ -34,7 +34,9 @@ export const alertFnRef: { current: AlertFn } = { current: () => null };
 
 export const toastFnRef: { current: ToastFn } = { current: () => null };
 
-export const connectionConfigFnRef: { current: VoidFunction } = {
+export const connectionConfigFnRef: {
+  current: (opts?: { key?: string; url?: string; email?: string }) => void;
+} = {
   current: () => null,
 };
 
@@ -66,7 +68,11 @@ export const prompt: PromptFn = (title, description, settings) =>
 export const toast: ToastFn = (message, status, timeout = 3000) =>
   toastFnRef.current(message, status, timeout);
 
-export const showConnectionSettings = () => connectionConfigFnRef.current();
+export const showConnectionSettings = (opts?: {
+  key?: string;
+  url?: string;
+  email?: string;
+}) => connectionConfigFnRef.current(opts);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const hasMessage = (error: any): error is { message: string } =>

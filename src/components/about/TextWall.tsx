@@ -9,10 +9,10 @@ type Props = {
 };
 
 const TextWall = ({ elements }: Props) => {
-  const marginBottom = useSafeAreaInsets().bottom;
+  const paddingBottom = useSafeAreaInsets().bottom;
   return (
     <Layout l2 flex>
-      <ScrollView style={{ marginBottom }}>{keyed([...elements])}</ScrollView>
+      <ScrollView style={{ paddingBottom }}>{keyed([...elements])}</ScrollView>
     </Layout>
   );
 };

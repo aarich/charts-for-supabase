@@ -1,11 +1,16 @@
-import { QueryInfo } from '../../utils';
+import { MOCK_DATA, MyConstants, QueryInfo } from '../../utils';
 import { useAppSelector } from '../store';
 
-export const useQueries = (): QueryInfo[] => {
-  const queries = useAppSelector((state) => state.queries);
+const useQueryState = () => {
+  const state = useAppSelector((state) => state.queries);
+  if (MyConstants.isScreenshotting) {
+    return MOCK_DATA.queries;
+  }
 
-  return Object.values(queries);
+  return state;
 };
 
+export const useQueries = (): QueryInfo[] => Object.values(useQueryState());
+
 export const useQuery = (queryId: string): QueryInfo | undefined =>
-  useAppSelector((state) => state.queries)?.[queryId];
+  useQueryState()[queryId];

@@ -5,11 +5,12 @@ import {
   NavigationContainer,
 } from '@react-navigation/native';
 import DrawerContentContainer from '../containers/app/DrawerContentContainer';
+import { DrawerParamList } from '../utils';
 import { useBackgroundColor, useIsDark } from '../utils/hooks';
 import LinkingConfiguration from './LinkingConfiguration';
 import RootStackNavigator from './RootStackNavigator';
 
-const Drawer = createDrawerNavigator();
+const Drawer = createDrawerNavigator<DrawerParamList>();
 
 export default () => {
   const isDark = useIsDark();

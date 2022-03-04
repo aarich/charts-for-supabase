@@ -6,8 +6,9 @@ import {
 } from '@ui-kitten/components';
 import { setString } from 'expo-clipboard';
 import { ReactElement } from 'react';
-import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
+import { Platform, StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import connection from '../../api/database';
+import { openTwitter } from '../../screens/about/TwitterTimelineScreen';
 import {
   alert,
   IconsOutlined,
@@ -40,11 +41,11 @@ const items: MenuItem[] = [
   { icon: IconsOutlined.globe, dest: 'Queries' },
   { icon: IconsOutlined.grid, title: 'Customize Dashboard', dest: 'HomeEdit' },
   { icon: IconsOutlined.book, dest: 'Help' },
-  { icon: IconsOutlined.bulb, dest: 'Feedback' },
 ];
 
 const more: MenuItem[] = [
   { icon: IconsOutlined.info, dest: 'About' },
+  { icon: IconsOutlined.bulb, dest: 'Feedback' },
   { icon: IconsOutlined.twitter, title: 'Updates', dest: 'Twitter' },
   { icon: IconsOutlined.refresh, dest: RESET },
 ];
@@ -66,7 +67,11 @@ export function DrawerContent({
         onResetApp();
         break;
       default:
-        onGoToScreen(dest);
+        if (Platform.OS === 'web' && dest === 'Twitter') {
+          openTwitter();
+        } else {
+          onGoToScreen(dest);
+        }
         break;
     }
   };

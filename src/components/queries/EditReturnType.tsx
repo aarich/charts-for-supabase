@@ -30,7 +30,7 @@ const EditReturnType = ({ onUpdate, draft }: Props) => {
     const {
       yColumn = '',
       xColumn = '',
-      scale = 'linear',
+      scale = 'time',
       count = 'exact',
     } = cachedInfo;
 

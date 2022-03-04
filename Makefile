@@ -26,4 +26,3 @@ build-all:
 
 publish: build-prep
 	expo publish --release-channel $(CHANNEL)
-	$(MAKE) build-finish

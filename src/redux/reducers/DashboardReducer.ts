@@ -10,7 +10,7 @@ import {
   setRow,
 } from '../actions';
 
-type DashboardState = {
+export type DashboardState = {
   rows: DashboardRow[];
 };
 

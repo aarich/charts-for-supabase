@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { FlatList, Pressable, StyleSheet } from 'react-native';
+import { FlatList, Platform, Pressable, StyleSheet } from 'react-native';
 import ChartEditContainer from '../../containers/home/ChartEditContainer';
 import { useQueries } from '../../redux/selectors';
 import { DashboardRow, IconsOutlined, prompt, Spacings } from '../../utils';
@@ -42,7 +42,7 @@ const RowEdit = ({
   }, [onUpdate, queryOptions, row]);
 
   const renderAddChartButton = () => {
-    if (charts.length < 2) {
+    if (charts.length < Platform.select({ web: 4, default: 2 })) {
       return (
         <Pressable onPress={onAddChart} style={styles.addChart}>
           <Layout l4 style={styles.addChart}>

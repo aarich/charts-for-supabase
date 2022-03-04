@@ -1,6 +1,5 @@
-import { parse, useURL } from 'expo-linking';
-import { useCallback, useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { useCallback, useEffect } from 'react';
+import { Platform, StyleSheet } from 'react-native';
 import connection from '../../api/database';
 import { Button, CenteredModal, View } from '../../components/base';
 import SupabaseConfig from '../../components/connections/SupabaseConfig';
@@ -12,30 +11,31 @@ import {
   ConnectionDraft,
   getSavedPassword,
   handleError,
-  showConnectionSettings,
   Spacings,
   toast,
+  UpdateState,
 } from '../../utils';
 
 type Props = {
   visible: boolean;
   onClose: VoidFunction;
+  draft: ConnectionDraft;
+  setDraft: UpdateState<ConnectionDraft>;
 };
 
-const SupabaseConfigModalContainer = ({ visible, onClose }: Props) => {
+const SupabaseConfigModalContainer = ({
+  visible,
+  onClose,
+  draft,
+  setDraft,
+}: Props) => {
   const storedConfig = useSetting(AppSetting.SUPABASE_CONFIG);
   const dispatch = useAppDispatch();
-  const [draft, setDraft] = useState<ConnectionDraft>({
-    url: '',
-    key: '',
-    email: '',
-    password: '',
-  });
 
   useEffect(() => {
-    if (storedConfig) {
+    if (storedConfig && Platform.OS !== 'web') {
       getSavedPassword().then(
-        (password) => password && setDraft({ ...storedConfig, password })
+        (password) => password && setDraft((d) => ({ ...d, password }))
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,7 +44,8 @@ const SupabaseConfigModalContainer = ({ visible, onClose }: Props) => {
   const title = storedConfig ? 'Edit Connection' : 'New Connection';
 
   const onSave = useCallback(() => {
-    dispatch(saveConnection(draft, draft.password))
+    const { password, ...toSave } = draft;
+    dispatch(saveConnection(toSave, password))
       .then(() => {
         onClose();
         toast('Client Created!');
@@ -58,30 +59,6 @@ const SupabaseConfigModalContainer = ({ visible, onClose }: Props) => {
     storedConfig && connection.init(storedConfig, draft.password);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const appUrl = useURL();
-  useEffect(() => {
-    if (!appUrl) {
-      return;
-    }
-
-    const { queryParams } = parse(appUrl);
-
-    const { key, url, email } = queryParams || {};
-
-    if (!key && !url && !email) {
-      return;
-    }
-
-    // We have received config from the url
-    setDraft((d) => ({
-      key: key ?? d.key,
-      url: url ?? d.url,
-      email: email ?? d.email,
-      password: d.password,
-    }));
-    showConnectionSettings();
-  }, [appUrl]);
 
   return (
     <CenteredModal

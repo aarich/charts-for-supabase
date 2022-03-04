@@ -1,5 +1,4 @@
 import { ComponentPropsWithoutRef } from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { EmptyState, Layout } from '../../components/base';
 import HomeContainer from '../../containers/home/HomeContainer';
 import { useDashboard, useQueries, useSetting } from '../../redux/selectors';
@@ -16,7 +15,6 @@ const HomeScreen = ({ navigation }: Props) => {
   const supabaseConfig = useSetting(AppSetting.SUPABASE_CONFIG);
   const queries = useQueries();
   const dashboard = useDashboard();
-  const paddingBottom = useSafeAreaInsets().bottom;
 
   let emptyState: ComponentPropsWithoutRef<typeof EmptyState> | undefined =
     undefined;
@@ -60,7 +58,7 @@ const HomeScreen = ({ navigation }: Props) => {
   }
 
   return (
-    <Layout flex style={{ paddingBottom }} l2>
+    <Layout flex l2>
       {emptyState ? <EmptyState {...emptyState} /> : <HomeContainer />}
     </Layout>
   );

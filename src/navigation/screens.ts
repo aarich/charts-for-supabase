@@ -1,5 +1,4 @@
 import { screened } from '../components/base/Screen';
-import ResetCacheScreen from '../containers/about/ResetCacheScreen';
 import AboutScreen from '../screens/about/AboutScreen';
 import AppScreen from '../screens/about/AppScreen';
 import FeedbackScreen from '../screens/about/FeedbackScreen';
@@ -29,11 +28,6 @@ export default asScreens<RootStackScreenInfo>([
   { name: 'Help', screen: HelpScreen },
   { name: 'Twitter', screen: TwitterTimelineScreen },
   { name: 'Feedback', screen: FeedbackScreen },
-  {
-    name: 'ResetCache',
-    screen: ResetCacheScreen,
-    options: { title: 'Reset' },
-  },
   {
     name: 'App',
     screen: AppScreen,

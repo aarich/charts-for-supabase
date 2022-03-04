@@ -1,4 +1,3 @@
-import { StackActions } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { HeaderButton } from '../../components/base';
 import EditQueryContainer from '../../containers/queries/EditQueryContainer';
@@ -22,7 +21,7 @@ const QueryEditScreen = ({ navigation, route }: Props) => {
               icon={IconsOutlined.trash}
               onPress={() => {
                 dispatch(deleteQuery(queryToEdit));
-                navigation.dispatch(StackActions.pop());
+                navigation.pop();
               }}
             />
           )
@@ -34,11 +33,8 @@ const QueryEditScreen = ({ navigation, route }: Props) => {
     <EditQueryContainer
       queryToEdit={queryToEdit}
       onCancel={() => navigation.pop()}
-      onSaved={(savedId) => {
-        if (id !== savedId) {
-          navigation.replace('QueryEdit', { id: savedId });
-        }
-
+      onSaved={() => {
+        navigation.pop();
         toast('Saved');
       }}
     />

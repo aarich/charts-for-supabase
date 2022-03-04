@@ -23,6 +23,6 @@ const Row = ({ row }: Props) => {
 export default Row;
 
 const styles = StyleSheet.create({
-  chart: { margin: Spacings.s1 },
+  chart: { marginHorizontal: Spacings.s1 },
   row: { marginHorizontal: Spacings.s2, marginTop: Spacings.s2 },
 });

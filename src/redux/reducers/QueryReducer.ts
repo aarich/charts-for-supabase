@@ -3,7 +3,7 @@ import { AnyAction } from 'redux';
 import { QueryInfo } from '../../utils';
 import { deleteQuery, reset, setQuery } from '../actions';
 
-type QueryState = {
+export type QueryState = {
   [queryId: string]: QueryInfo;
 };
 

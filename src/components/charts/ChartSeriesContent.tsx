@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { ScalePropType } from 'victory-core';
 import { VictoryAxis, VictoryChart, VictoryLine } from 'victory-native';
-import { QueryReturnLinear } from '../../utils';
+import { formatNumber, QueryReturnLinear } from '../../utils';
 import { useChartTheme } from '../../utils/hooks';
 
 type Props = {
@@ -58,7 +58,11 @@ const ChartSeriesContent = ({
         y={yColumn}
         sortKey={scale === 'time' ? xColumn : undefined}
       />
-      <VictoryAxis label={yColumn} dependentAxis />
+      <VictoryAxis
+        label={yColumn}
+        dependentAxis
+        tickFormat={(t) => (typeof t === 'number' ? formatNumber(t) : t)}
+      />
       <VictoryAxis label={xColumn} />
     </VictoryChart>
   );

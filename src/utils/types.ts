@@ -1,6 +1,16 @@
-import { ParamListBase } from '@react-navigation/native';
+import {
+  DrawerNavigationProp,
+  DrawerScreenProps,
+} from '@react-navigation/drawer';
+import {
+  CompositeNavigationProp,
+  CompositeScreenProps,
+  NavigatorScreenParams,
+  ParamListBase,
+} from '@react-navigation/native';
 import {
   NativeStackNavigationOptions,
+  NativeStackNavigationProp,
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 import { Dispatch, SetStateAction } from 'react';
@@ -19,6 +29,10 @@ export type ScreenInfo<P extends ParamListBase, O> = {
   options?: O;
 };
 
+export type DrawerParamList = {
+  RootStack: NavigatorScreenParams<RootStackParamList>;
+};
+
 export type RootStackParamList = {
   // app
   App: undefined;
@@ -26,7 +40,6 @@ export type RootStackParamList = {
   Help: undefined;
   Twitter: undefined;
   Feedback: undefined;
-  ResetCache: undefined;
 
   // content
   Home: undefined;
@@ -41,7 +54,16 @@ export type RootStackScreenInfo = Omit<
 > & { icon?: IconType };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
-  NativeStackScreenProps<RootStackParamList, Screen>;
+  CompositeScreenProps<
+    NativeStackScreenProps<RootStackParamList, Screen>,
+    DrawerScreenProps<DrawerParamList>
+  >;
+
+export type RootStackNavigationProp<Screen extends keyof RootStackParamList> =
+  CompositeNavigationProp<
+    NativeStackNavigationProp<RootStackParamList, Screen>,
+    DrawerNavigationProp<DrawerParamList>
+  >;
 
 export const isValidParam = <T>(
   k: string | number | symbol,

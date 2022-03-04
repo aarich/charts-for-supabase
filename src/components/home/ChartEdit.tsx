@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { useQuery } from '../../redux/selectors';
 import { DashboardChart, Spacings } from '../../utils';
 import { Card, Text, View } from '../base';
-import ChartEditFooterActions from './ChartEditFooterActions';
+import ChartEditActions from './ChartEditActions';
 
 type Props = {
   chart: DashboardChart;
@@ -13,15 +13,12 @@ const ChartEdit = ({ chart, onRemove }: Props) => {
   const query = useQuery(chart.queryId);
 
   return (
-    <Card
-      disabled
-      style={styles.container}
-      footer={
-        <ChartEditFooterActions onRemove={onRemove} onEdit={() => null} />
-      }
-    >
+    <Card disabled padded style={styles.container}>
       <View row>
-        <Text>{query?.name}</Text>
+        <View center>
+          <Text>{query?.name}</Text>
+        </View>
+        <ChartEditActions onRemove={onRemove} />
       </View>
     </Card>
   );

@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { Share, View } from 'react-native';
+import { AlertButton, Platform, Share, View } from 'react-native';
 import { captureRef } from 'react-native-view-shot';
 import { useExecuteQuery } from '../../api/queries/useExecuteQuery';
 import Chart from '../../components/charts/Chart';
@@ -54,7 +54,10 @@ const ChartContainer = ({ chart }: Props) => {
     alert(`${query?.name}`, undefined, [
       { text: 'Reload', onPress: refetch },
       { text: 'Edit Query', onPress: onGoToQuery },
-      { text: 'Share Snapshot', onPress: onShareSnapshot },
+      ...Platform.select<AlertButton[]>({
+        web: [],
+        default: [{ text: 'Share Snapshot', onPress: onShareSnapshot }],
+      }),
     ]);
 
   return (

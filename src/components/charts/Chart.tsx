@@ -86,7 +86,10 @@ const Chart = forwardRef<RNView, Props>(
       >
         <View
           ref={ref}
-          onLayout={({ nativeEvent }) => setLayout(nativeEvent.layout)}
+          onLayout={({ nativeEvent }) =>
+            // just measure once
+            !layout && setLayout(nativeEvent.layout)
+          }
         >
           <Layout>{renderContent()}</Layout>
         </View>

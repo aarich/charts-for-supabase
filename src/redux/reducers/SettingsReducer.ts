@@ -3,13 +3,11 @@ import { AppSetting, ConnectionInfo } from '../../utils/types';
 import { setAppSetting } from '../actions';
 
 export type SettingsState = {
-  [AppSetting.HAS_REQUESTED_REVIEW]: boolean;
+  [AppSetting.HAS_REQUESTED_REVIEW]?: boolean;
   [AppSetting.SUPABASE_CONFIG]?: ConnectionInfo;
 };
 
-const initialState: SettingsState = {
-  [AppSetting.HAS_REQUESTED_REVIEW]: false,
-};
+const initialState: SettingsState = {};
 
 const SettingsReducer = (
   state = initialState,

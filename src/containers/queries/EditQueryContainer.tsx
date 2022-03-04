@@ -8,6 +8,7 @@ import { saveQuery } from '../../redux/actions';
 import { useAppDispatch } from '../../redux/store';
 import {
   handleError,
+  isQueryValid,
   QueryInfo,
   QueryReturnType,
   QueryType,
@@ -31,7 +32,7 @@ const makeDefaultQueryInfo = (): QueryInfo => {
       type: QueryReturnType.LINEAR,
       xColumn: '',
       yColumn: '',
-      scale: 'linear',
+      scale: 'time',
     },
     type: QueryType.SELECT,
   };
@@ -53,7 +54,7 @@ const EditQueryContainer = ({ queryToEdit, onSaved, onCancel }: Props) => {
     dispatch(saveQuery(draft)).then(onSaved).catch(handleError);
   }, [dispatch, draft, onSaved]);
 
-  const canSave = !!draft.name;
+  const canSave = isQueryValid(draft);
 
   useNavTitle(queryToEdit ? 'Edit Query' : 'New Query');
 

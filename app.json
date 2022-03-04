@@ -8,7 +8,11 @@
     "scheme": "sbcharts",
     "userInterfaceStyle": "automatic",
     "backgroundColor": "#222B45",
-    "platforms": ["android", "ios", "web"],
+    "platforms": [
+      "android",
+      "ios",
+      "web"
+    ],
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -18,14 +22,22 @@
       "fallbackToCacheTimeout": 5000,
       "enabled": true
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "buildNumber": "1",
       "supportsTablet": true,
       "bundleIdentifier": "com.mrarich.charts",
       "appStoreUrl": "https://apps.apple.com/app/apple-store/id1612680145?pt=117925864&ct=aj&mt=8",
-      "infoPlist": { "LSApplicationQueriesSchemes": ["twitter"] },
-      "config": { "usesNonExemptEncryption": false }
+      "infoPlist": {
+        "LSApplicationQueriesSchemes": [
+          "twitter"
+        ]
+      },
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "android": {
       "playStoreUrl": "https://play.google.com/store/apps/details?id=rich.alex.charts",
@@ -43,7 +55,13 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png",
-      "build": { "babel": { "include": ["@ui-kitten/components"] } }
+      "build": {
+        "babel": {
+          "include": [
+            "@ui-kitten/components"
+          ]
+        }
+      }
     }
   }
 }

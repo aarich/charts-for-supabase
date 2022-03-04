@@ -1,3 +1,5 @@
+import { StyleSheet } from 'react-native';
+import { formatNumber, Spacings } from '../../utils';
 import { Text } from '../base';
 
 type Props = {
@@ -5,7 +7,13 @@ type Props = {
 };
 
 const ChartCountContent = ({ count }: Props) => {
-  return <Text h1>{count || 0}</Text>;
+  return (
+    <Text h1 style={styles.value}>
+      {formatNumber(count || 0)}
+    </Text>
+  );
 };
 
 export default ChartCountContent;
+
+const styles = StyleSheet.create({ value: { padding: Spacings.s4 } });
