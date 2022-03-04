@@ -26,11 +26,11 @@ const elements = [
   h6('What information am I sharing?'),
   p('All information you share and the queries you set up are stored locally.'),
   h3('How do I start?'),
-  h6('Connect to Supabase'),
+  h6('1. Connect to Supabase'),
   p(
     'First, connect to Supabase. Paste your client URL and anon key into the connection settings. Optionally, authenticate to interact with the database as a user.'
   ),
-  h6('Create a Query'),
+  h6('2. Create a Query'),
   p(
     'Queries are single database calls. Currently, you can either perform a SELECT statement on a table/view or you can call an RPC. Once the data is retrieved, specify how it is displayed',
     "If you choose a COUNT query, you'll see a number displayed in the dashboard. Otherwise, set up the x and y axis for the chart based on the retrieved data.",
@@ -38,10 +38,12 @@ const elements = [
     'SELECT COUNT(1) AS count, created_day FROM profile GROUP BY created_day',
     "To display a time chart for the above query, set the x column to 'created_day' and the y column as 'count'. Then, select time as the scale"
   ),
-  h6('Customize Dashboard'),
+  h6('3. Customize Dashboard'),
   p(
     'Finally, add queries to your home page in the order that makes sense to you'
   ),
+  h6('4. ???'),
+  h6('5. Profit'),
 ];
 
 const HelpContainer = () => {

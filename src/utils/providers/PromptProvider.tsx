@@ -131,7 +131,7 @@ const PromptProvider = ({ children }: { children: ReactNode }) => {
         secureTextEntry={state.secureTextEntry}
         caption={
           state.maxLength && state.maxLength - textValue.length < 40
-            ? textValue.length + '/' + state.maxLength
+            ? `${textValue.length}/${state.maxLength}`
             : undefined
         }
       />

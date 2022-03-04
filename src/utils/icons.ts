@@ -270,6 +270,7 @@ export const Icons = nicer({
   share: 'share',
   google: 'google',
   twitter: 'twitter',
+  github: 'github',
   radio: 'radio',
   lock: 'lock',
   award: 'award',
@@ -336,6 +337,7 @@ export const Icons = nicer({
   expand: 'expand',
   collapse: 'collapse',
   minus: 'minus',
+  globe: 'globe',
 });
 
 export const IconsOutlined = Object.keys(Icons)

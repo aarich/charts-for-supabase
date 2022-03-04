@@ -13,7 +13,7 @@ import { useIsDark } from '../../utils/hooks';
 
 export const TWITTER_PROFILE = 'mr_arich';
 
-const profileUrl = 'https://twitter.com/' + TWITTER_PROFILE;
+const profileUrl = `https://twitter.com/${TWITTER_PROFILE}`;
 
 const urlParam = encodeURIComponent(profileUrl);
 
@@ -23,7 +23,7 @@ export const openTwitter = () => {
   } else {
     canOpenURL('twitter://').then((canOpen) =>
       openURL(
-        canOpen ? 'twitter://user?screen_name=' + TWITTER_PROFILE : profileUrl
+        canOpen ? `twitter://user?screen_name=${TWITTER_PROFILE}` : profileUrl
       )
     );
   }

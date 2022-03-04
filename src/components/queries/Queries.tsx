@@ -1,5 +1,5 @@
 import { List } from '@ui-kitten/components';
-import { Pressable } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import {
   IconsOutlined,
   IconType,
@@ -45,14 +45,16 @@ const Queries = ({ queries, onGoToQuery, onDuplicateQuery }: Props) => {
   return (
     <List
       data={queries}
+      contentContainerStyle={queries.length === 0 ? styles.flex : undefined}
       ListEmptyComponent={
         <EmptyState
-          title="No Queries"
+          title="Nothing Here Yet"
+          description="Create queries to load data"
           actions={[
             {
-              label: 'Add Query',
+              label: 'Add a Query',
               onPress: () => onGoToQuery(),
-              icon: IconsOutlined.plus,
+              icon: IconsOutlined.plusCircle,
             },
           ]}
         />
@@ -78,3 +80,5 @@ const Queries = ({ queries, onGoToQuery, onDuplicateQuery }: Props) => {
 };
 
 export default Queries;
+
+const styles = StyleSheet.create({ flex: { flex: 1 } });

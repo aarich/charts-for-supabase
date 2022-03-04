@@ -3,12 +3,8 @@ import { log } from './log';
 
 const KEY = `SB_user_password`;
 
-export const getSavedPassword = async (
-  requireAuthentication: boolean
-): Promise<string> => {
-  const password = await SecureStore.getItemAsync(KEY, {
-    requireAuthentication,
-  });
+export const getSavedPassword = async (): Promise<string> => {
+  const password = await SecureStore.getItemAsync(KEY);
 
   if (!password) {
     log(`Didn't find saved password`);

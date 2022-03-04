@@ -4,15 +4,12 @@ import { captureRef } from 'react-native-view-shot';
 import { useExecuteQuery } from '../../api/queries/useExecuteQuery';
 import Chart from '../../components/charts/Chart';
 import { useQuery } from '../../redux/selectors';
-import { alert, DashboardChart, DashboardRow } from '../../utils';
+import { alert, DashboardChart } from '../../utils';
 import { useStackNavigation } from '../../utils/hooks';
 
-type Props = {
-  row: DashboardRow;
-  chart: DashboardChart;
-};
+type Props = { chart: DashboardChart };
 
-const ChartContainer = ({ chart, row }: Props) => {
+const ChartContainer = ({ chart }: Props) => {
   const navigation = useStackNavigation();
   const { queryId } = chart;
   const query = useQuery(queryId);
@@ -29,7 +26,6 @@ const ChartContainer = ({ chart, row }: Props) => {
         quality: 1,
         format: 'png',
       });
-      // shareAsync(result, { dialogTitle: query?.name, UTI: 'image/png' });
       Share.share(
         { url: result, message: query?.name, title: query?.name },
         { dialogTitle: query?.name }
@@ -55,7 +51,7 @@ const ChartContainer = ({ chart, row }: Props) => {
     : undefined;
 
   const onPressOptions = () =>
-    alert(query?.name + '', undefined, [
+    alert(`${query?.name}`, undefined, [
       { text: 'Reload', onPress: refetch },
       { text: 'Edit Query', onPress: onGoToQuery },
       { text: 'Share Snapshot', onPress: onShareSnapshot },
@@ -69,7 +65,6 @@ const ChartContainer = ({ chart, row }: Props) => {
       onPressError={onPressError}
       onPressOptions={onPressOptions}
       loading={loading}
-      row={row}
     />
   );
 };

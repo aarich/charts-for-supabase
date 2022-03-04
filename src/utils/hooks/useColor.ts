@@ -1,6 +1,7 @@
 import { useTheme } from '@ui-kitten/components';
 import { EvaStatus } from '@ui-kitten/components/devsupport';
 import { VictoryThemeDefinition } from 'victory-core';
+import { Spacings } from '../style';
 
 export const useStatusColor = (status: EvaStatus = 'primary') =>
   useTheme()[`color-${status}-default`];
@@ -17,11 +18,15 @@ export const useChartTheme = (): VictoryThemeDefinition => {
   const textColor = useTextColor();
   const primaryColor = useStatusColor();
   return {
+    chart: {
+      padding: { right: Spacings.s5, left: 50, top: Spacings.s5, bottom: 50 },
+    },
     axis: {
       style: {
-        grid: { stroke: borderColor, strokeWidth: 1.5 },
-        axis: { stroke: textColor },
+        grid: { stroke: borderColor },
+        axis: { stroke: textColor, fill: textColor, color: textColor },
         tickLabels: { fill: textColor },
+        axisLabel: { fill: textColor },
       },
     },
     line: {

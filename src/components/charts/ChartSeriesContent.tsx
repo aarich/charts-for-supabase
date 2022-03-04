@@ -1,13 +1,14 @@
 import { useMemo } from 'react';
 import { ScalePropType } from 'victory-core';
-import { VictoryChart, VictoryLine } from 'victory-native';
-import { DashboardRow, QueryReturnLinear } from '../../utils';
+import { VictoryAxis, VictoryChart, VictoryLine } from 'victory-native';
+import { QueryReturnLinear } from '../../utils';
 import { useChartTheme } from '../../utils/hooks';
 
 type Props = {
-  row: DashboardRow;
   queryData: Record<string, unknown>[] | null;
   queryReturnInfo: QueryReturnLinear;
+  width: number | undefined;
+  height: number | undefined;
 };
 
 const parseDate = (
@@ -30,7 +31,12 @@ const parseData = (
   return queryData;
 };
 
-const ChartSeriesContent = ({ queryData, queryReturnInfo }: Props) => {
+const ChartSeriesContent = ({
+  queryData,
+  queryReturnInfo,
+  width,
+  height,
+}: Props) => {
   const { scale, xColumn, yColumn } = queryReturnInfo;
   const data = useMemo(
     () => parseData(queryData, xColumn, scale),
@@ -41,18 +47,19 @@ const ChartSeriesContent = ({ queryData, queryReturnInfo }: Props) => {
 
   return (
     <VictoryChart
-      style={{ background: { background: 'green' } }}
       theme={chartTheme}
+      width={width}
+      height={height}
+      scale={{ x: scale, y: 'linear' }}
     >
       <VictoryLine
-        scale={{ x: scale, y: 'linear' }}
         data={data}
         x={xColumn}
         y={yColumn}
-        labels={({ datum }) => datum[yColumn]}
         sortKey={scale === 'time' ? xColumn : undefined}
-        theme={chartTheme}
       />
+      <VictoryAxis label={yColumn} dependentAxis />
+      <VictoryAxis label={xColumn} />
     </VictoryChart>
   );
 };

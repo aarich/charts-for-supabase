@@ -8,7 +8,6 @@ import RowEditFooterActions from './RowEditFooterActions';
 
 type Props = {
   row: DashboardRow;
-  rowIndex: number;
   onUpdate: (row: DashboardRow) => void;
   onRemove: VoidFunction;
   onCopy: VoidFunction;
@@ -18,7 +17,6 @@ type Props = {
 
 const RowEdit = ({
   row,
-  rowIndex,
   onUpdate,
   onRemove,
   onCopy,
@@ -58,10 +56,6 @@ const RowEdit = ({
     }
   };
 
-  const heightStyle = {
-    height: row.height * 40,
-  };
-
   return (
     <View>
       <Card
@@ -69,16 +63,14 @@ const RowEdit = ({
         style={styles.container}
         header={
           <RowEditFooterActions
-            row={row}
             onRemove={onRemove}
-            onUpdate={onUpdate}
             onMoveDown={onMoveDown}
             onMoveUp={onMoveUp}
             onCopy={onCopy}
           />
         }
       >
-        <Layout l2 style={[heightStyle, styles.innerLayout]}>
+        <Layout l2 style={styles.innerLayout}>
           <FlatList
             horizontal
             data={charts}
@@ -88,7 +80,6 @@ const RowEdit = ({
               <ChartEditContainer
                 key={index}
                 row={row}
-                rowIndex={rowIndex}
                 chartIndex={index}
                 onUpdateCharts={(c) => onUpdate({ ...row, charts: c })}
               />

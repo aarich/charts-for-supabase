@@ -1,5 +1,7 @@
 import { useCallback } from 'react';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { v4 as uuid } from 'uuid';
+import { View } from '../../components/base';
 import Queries from '../../components/queries/Queries';
 import { saveQuery } from '../../redux/actions';
 import { useQueries } from '../../redux/selectors';
@@ -18,13 +20,16 @@ const QueriesContainer = ({ onGoToQuery }: Props) => {
     },
     [dispatch]
   );
+  const paddingBottom = useSafeAreaInsets().bottom;
 
   return (
-    <Queries
-      queries={queries}
-      onGoToQuery={onGoToQuery}
-      onDuplicateQuery={onDuplicateQuery}
-    />
+    <View flex style={{ paddingBottom }}>
+      <Queries
+        queries={queries}
+        onGoToQuery={onGoToQuery}
+        onDuplicateQuery={onDuplicateQuery}
+      />
+    </View>
   );
 };
 

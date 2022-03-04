@@ -5,8 +5,8 @@ import {
   SetStateAction,
   useState,
 } from 'react';
-import { connectionConfigFnRef } from '..';
 import SupabaseConfigModalContainer from '../../containers/connections/SupabaseConfigModalContainer';
+import { connectionConfigFnRef } from '../interactions';
 
 type ConfigContextType = {
   visible: boolean;

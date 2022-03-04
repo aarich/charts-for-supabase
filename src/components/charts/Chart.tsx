@@ -1,20 +1,19 @@
 import { PostgrestResponse } from '@supabase/postgrest-js';
 import { Layout, Spinner } from '@ui-kitten/components';
-import { forwardRef, ReactElement } from 'react';
-import { StyleSheet, View as RNView } from 'react-native';
+import { forwardRef, ReactElement, useState } from 'react';
+import { LayoutRectangle, StyleSheet, View as RNView } from 'react-native';
 import { useQuery } from '../../redux/selectors';
 import {
   DashboardChart,
-  DashboardRow,
   IconsOutlined,
   QueryReturnType,
+  Spacings,
 } from '../../utils';
 import { Card, IconButton, Text, View } from '../base';
 import ChartCountContent from './ChartCountContent';
 import ChartSeriesContent from './ChartSeriesContent';
 
 type Props = {
-  row: DashboardRow;
   chart: DashboardChart;
   onPressError?: VoidFunction;
   onPressOptions?: VoidFunction;
@@ -23,9 +22,9 @@ type Props = {
 };
 
 const Chart = forwardRef<RNView, Props>(
-  ({ row, chart, loading, data, onPressError, onPressOptions }, ref) => {
+  ({ chart, loading, data, onPressError, onPressOptions }, ref) => {
     const query = useQuery(chart.queryId);
-
+    const [layout, setLayout] = useState<LayoutRectangle>();
     if (!query) {
       return <Text>Query not found</Text>;
     }
@@ -57,13 +56,14 @@ const Chart = forwardRef<RNView, Props>(
       const { returnInfo } = query;
       switch (returnInfo.type) {
         case QueryReturnType.COUNT:
-          return <ChartCountContent count={data.count} row={row} />;
+          return <ChartCountContent count={data.count} />;
         case QueryReturnType.LINEAR:
           return (
             <ChartSeriesContent
               queryData={data.data}
               queryReturnInfo={returnInfo}
-              row={row}
+              width={layout?.width}
+              height={layout?.height}
             />
           );
       }
@@ -72,11 +72,10 @@ const Chart = forwardRef<RNView, Props>(
     return (
       <Card
         onPress={onPressOptions}
-        padded
         style={styles.card}
         footer={
           <View row spread>
-            <Text category="s2">{query.name}</Text>
+            <Text category="s1">{query.name}</Text>
             <IconButton
               status="basic"
               name={IconsOutlined.moreV}
@@ -85,7 +84,10 @@ const Chart = forwardRef<RNView, Props>(
           </View>
         }
       >
-        <View ref={ref}>
+        <View
+          ref={ref}
+          onLayout={({ nativeEvent }) => setLayout(nativeEvent.layout)}
+        >
           <Layout>{renderContent()}</Layout>
         </View>
       </Card>
@@ -95,4 +97,4 @@ const Chart = forwardRef<RNView, Props>(
 
 export default Chart;
 
-const styles = StyleSheet.create({ card: { flexGrow: 1 } });
+const styles = StyleSheet.create({ card: { paddingHorizontal: Spacings.s2 } });

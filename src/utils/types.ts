@@ -28,8 +28,6 @@ export type RootStackParamList = {
   Feedback: undefined;
   ResetCache: undefined;
 
-  Settings: undefined;
-
   // content
   Home: undefined;
   HomeEdit: undefined;
@@ -53,7 +51,6 @@ export const isValidParam = <T>(
 };
 
 export enum AppSetting {
-  REQUIRE_LOCAL_AUTH = 'REQUIRE_LOCAL_AUTH',
   SUPABASE_CONFIG = 'SUPABASE_CONFIG',
   HAS_REQUESTED_REVIEW = 'HAS_REQUESTED_REVIEW',
 }
@@ -173,7 +170,6 @@ export type DashboardChart = {
 
 export type DashboardRow = {
   charts: DashboardChart[];
-  height: 1 | 2 | 3;
 };
 
 export type UpdateState<T> = Dispatch<SetStateAction<T>>;

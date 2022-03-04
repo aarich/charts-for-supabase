@@ -9,10 +9,10 @@ import {
   useState,
 } from 'react';
 import { AlertButton, StyleSheet } from 'react-native';
-import { MyAlertButton } from '..';
 import { Button, CenteredModal, Icon, Text, View } from '../../components/base';
 import { alertFnRef } from '../interactions';
 import { Spacings } from '../style';
+import { MyAlertButton } from '../types';
 
 type AlertState = {
   visible: boolean;

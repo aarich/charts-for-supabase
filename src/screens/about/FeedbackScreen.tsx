@@ -38,18 +38,18 @@ const FeedbackScreen = () => {
 
   buttons.push({
     title: `Open in the ${app} Store`,
-    icon: Icons.bulb,
+    icon: Platform.select({ android: Icons.google, default: Icons.bulb }),
     onPress: () => openURL(storeUrl),
   });
 
   buttons.push({
     title: 'Send Bug Report',
-    icon: Icons.activity,
+    icon: Icons.github,
     onPress: () => openURL(`${MyConstants.githubUrl}/issues/new/choose`),
   });
 
   buttons.push({
-    title: 'Visit @' + TWITTER_PROFILE,
+    title: `Visit @${TWITTER_PROFILE}`,
     icon: Icons.twitter,
     onPress: openTwitter,
   });

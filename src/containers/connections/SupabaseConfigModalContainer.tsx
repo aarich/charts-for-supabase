@@ -14,6 +14,7 @@ import {
   handleError,
   showConnectionSettings,
   Spacings,
+  toast,
 } from '../../utils';
 
 type Props = {
@@ -23,7 +24,6 @@ type Props = {
 
 const SupabaseConfigModalContainer = ({ visible, onClose }: Props) => {
   const storedConfig = useSetting(AppSetting.SUPABASE_CONFIG);
-  const requireAuth = useSetting(AppSetting.REQUIRE_LOCAL_AUTH);
   const dispatch = useAppDispatch();
   const [draft, setDraft] = useState<ConnectionDraft>({
     url: '',
@@ -34,7 +34,7 @@ const SupabaseConfigModalContainer = ({ visible, onClose }: Props) => {
 
   useEffect(() => {
     if (storedConfig) {
-      getSavedPassword(requireAuth).then(
+      getSavedPassword().then(
         (password) => password && setDraft({ ...storedConfig, password })
       );
     }
@@ -45,11 +45,14 @@ const SupabaseConfigModalContainer = ({ visible, onClose }: Props) => {
 
   const onSave = useCallback(() => {
     dispatch(saveConnection(draft, draft.password))
-      .then(onClose)
+      .then(() => {
+        onClose();
+        toast('Client Created!');
+      })
       .catch(handleError);
   }, [dispatch, draft, onClose]);
 
-  const canSave = draft.key && draft.url && draft.email && draft.password;
+  const canSave = draft.key && draft.url;
 
   useEffect(() => {
     storedConfig && connection.init(storedConfig, draft.password);

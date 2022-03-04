@@ -20,8 +20,6 @@ const Screen: FC = ({ children }) => {
   return <View style={style}>{children}</View>;
 };
 
-export default Screen;
-
 export const screened =
   <P extends Record<string, unknown>>(Component: FC<P>) =>
   (props: P) =>

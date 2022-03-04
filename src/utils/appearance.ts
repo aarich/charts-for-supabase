@@ -1,20 +1,4 @@
 import { TextProps } from '@ui-kitten/components';
-import TimeAgo, { FormatStyleName } from 'javascript-time-ago';
-import en from 'javascript-time-ago/locale/en.json';
-import moment from 'moment';
-
-TimeAgo.addDefaultLocale(en);
-
-const timeAgo = new TimeAgo('en-US');
-
-export const formatTimeAgo = (
-  date: Date | string | number,
-  format: FormatStyleName = 'twitter-minute-now'
-): string =>
-  timeAgo.format(
-    typeof date === 'object' ? date : moment(date).toDate(),
-    format
-  ) as string;
 
 export const formatNumber = (num: number, digits = 1) => {
   const lookup = [

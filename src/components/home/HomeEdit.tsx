@@ -22,8 +22,7 @@ const HomeEdit = ({ rows, onSetRow, onRemove, onMoveUp }: Props) => {
             <RowEdit
               key={index}
               row={row}
-              rowIndex={index}
-              onUpdate={(row) => onSetRow(row, index)}
+              onUpdate={(updated) => onSetRow(updated, index)}
               onRemove={() => onRemove(index)}
               onCopy={() => onSetRow(row)}
               onMoveUp={moveUp}
@@ -33,7 +32,7 @@ const HomeEdit = ({ rows, onSetRow, onRemove, onMoveUp }: Props) => {
         })}
         <Button
           label="New Row"
-          onPress={() => onSetRow({ charts: [], height: 2 })}
+          onPress={() => onSetRow({ charts: [] })}
           ghost
           icon={{ name: IconsOutlined.plusCircle }}
         />

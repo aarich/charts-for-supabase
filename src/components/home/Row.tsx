@@ -13,7 +13,7 @@ const Row = ({ row }: Props) => {
     <View row style={styles.row}>
       {charts.map((chart, i) => (
         <View flex key={i} style={styles.chart}>
-          <ChartContainer chart={chart} row={row} />
+          <ChartContainer chart={chart} />
         </View>
       ))}
     </View>

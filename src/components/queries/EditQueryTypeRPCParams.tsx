@@ -1,10 +1,8 @@
-import { StyleSheet } from 'react-native';
 import {
   Icons,
   Param,
   QueryInfo,
   RPCQueryInfo,
-  Spacings,
   UpdateState,
 } from '../../utils';
 import { Button, TextField, View } from '../base';
@@ -76,5 +74,3 @@ const EditQueryTypeRPCParams = ({ onUpdate, draft }: Props) => {
 };
 
 export default EditQueryTypeRPCParams;
-
-const styles = StyleSheet.create({ item: { marginTop: Spacings.s2 } });

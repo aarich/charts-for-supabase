@@ -1,5 +1,11 @@
-import { Drawer, DrawerItem } from '@ui-kitten/components';
+import {
+  Drawer,
+  DrawerGroup,
+  DrawerItem,
+  MenuItemProps,
+} from '@ui-kitten/components';
 import { setString } from 'expo-clipboard';
+import { ReactElement } from 'react';
 import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import connection from '../../api/database';
 import {
@@ -16,38 +22,48 @@ import { Badge, Icon, Text, View } from '../base';
 
 type Props = {
   onGoToScreen: (name: keyof RootStackParamList) => void;
-  onToggleDrawer: () => void;
+  onToggleDrawer: VoidFunction;
+  onResetApp: VoidFunction;
   style?: StyleProp<ViewStyle>;
 };
 
-const CLOSE = 'Close';
-const EDIT_CONNECTION = 'Edit Connection';
+const CONNECTION = 'Edit Connection';
+const RESET = 'Reset App';
 
 type MenuItem = {
   icon: IconType;
   title?: string;
-  dest: keyof RootStackParamList | typeof CLOSE | typeof EDIT_CONNECTION;
+  dest: keyof RootStackParamList | typeof CONNECTION | typeof RESET;
 };
 
 const items: MenuItem[] = [
-  { icon: IconsOutlined.barChart, title: 'Manage Queries', dest: 'Queries' },
+  { icon: IconsOutlined.globe, dest: 'Queries' },
   { icon: IconsOutlined.grid, title: 'Customize Dashboard', dest: 'HomeEdit' },
-  { icon: IconsOutlined.activity, dest: EDIT_CONNECTION },
-  { icon: IconsOutlined.settings, dest: 'Settings' },
   { icon: IconsOutlined.book, dest: 'Help' },
-  { icon: IconsOutlined.info, dest: 'About' },
-  { icon: IconsOutlined.close, dest: CLOSE },
+  { icon: IconsOutlined.bulb, dest: 'Feedback' },
 ];
 
-export function DrawerContent({ onGoToScreen, onToggleDrawer, style }: Props) {
+const more: MenuItem[] = [
+  { icon: IconsOutlined.info, dest: 'About' },
+  { icon: IconsOutlined.twitter, title: 'Updates', dest: 'Twitter' },
+  { icon: IconsOutlined.refresh, dest: RESET },
+];
+
+export function DrawerContent({
+  onGoToScreen,
+  onToggleDrawer,
+  onResetApp,
+  style,
+}: Props) {
   const onPressItem = (dest: MenuItem['dest']) => {
     switch (dest) {
-      case CLOSE:
-        onToggleDrawer();
-        break;
-      case EDIT_CONNECTION:
+      case CONNECTION:
         showConnectionSettings();
         onToggleDrawer();
+        break;
+      case RESET:
+        onToggleDrawer();
+        onResetApp();
         break;
       default:
         onGoToScreen(dest);
@@ -61,7 +77,7 @@ export function DrawerContent({ onGoToScreen, onToggleDrawer, style }: Props) {
   const onPressConnection = () => {
     const edit = {
       text: 'Edit Connection',
-      onPress: () => onPressItem(EDIT_CONNECTION),
+      onPress: () => onPressItem(CONNECTION),
     };
     if (user) {
       alert('', `Logged in as ${user.email}\n${user.id}`, [
@@ -79,38 +95,56 @@ export function DrawerContent({ onGoToScreen, onToggleDrawer, style }: Props) {
     }
   };
 
+  const renderItem = ({
+    icon,
+    dest,
+    title = dest,
+  }: MenuItem): ReactElement<MenuItemProps> => (
+    <DrawerItem
+      key={icon}
+      accessoryLeft={(props) => <Icon name={icon} {...props} />}
+      title={title}
+      onPress={() => onPressItem(dest)}
+    />
+  );
+
+  const drawerItems = [
+    ...items.map(renderItem),
+    <DrawerGroup
+      key="more"
+      title="More"
+      accessoryLeft={(props) => <Icon name={IconsOutlined.menu} {...props} />}
+    >
+      {more.map(renderItem)}
+    </DrawerGroup>,
+  ];
+
   return (
     <Drawer
       style={style}
       ListHeaderComponent={
         <View style={styles.sectionContainer}>
           <Text h1>{MyConstants.manifest?.name}</Text>
-
           <View style={styles.connected}>
             <Badge
               label={`${client ? '' : 'Not '} Connected to Supabase`}
-              status={client ? 'success' : 'warning'}
+              status={client ? 'success' : 'danger'}
               onPress={onPressConnection}
             />
           </View>
         </View>
       }
     >
-      {items.map(({ icon, dest, title = dest }) => (
-        <DrawerItem
-          key={title}
-          accessoryLeft={(props) => <Icon name={icon} {...props} />}
-          title={title}
-          onPress={() => onPressItem(dest)}
-        />
-      ))}
+      {drawerItems}
     </Drawer>
   );
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
+  sectionContainer: { paddingHorizontal: Spacings.s4 },
+  connected: {
     paddingHorizontal: Spacings.s4,
+    paddingTop: Spacings.s2,
+    paddingBottom: Spacings.s1,
   },
-  connected: { paddingHorizontal: Spacings.s4, paddingTop: Spacings.s2 },
 });

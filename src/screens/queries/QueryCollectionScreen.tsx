@@ -11,24 +11,29 @@ import {
 
 type Props = RootStackScreenProps<'Queries'>;
 const QueryCollectionScreen = ({ navigation }: Props) => {
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <HeaderButton
-          icon={IconsOutlined.plus}
-          onPress={() => navigation.push('QueryEdit', {})}
-        />
-      ),
-    });
-  });
-
   const connConfig = useSetting(AppSetting.SUPABASE_CONFIG);
+
+  useEffect(() => {
+    if (connConfig) {
+      navigation.setOptions({
+        headerRight: () => (
+          <HeaderButton
+            icon={IconsOutlined.plus}
+            onPress={() => navigation.push('QueryEdit', {})}
+          />
+        ),
+      });
+    } else {
+      navigation.setOptions({ headerRight: undefined });
+    }
+  }, [connConfig, navigation]);
+
   if (!connConfig) {
     return (
       <Layout flex>
         <EmptyState
           title="No Connection"
-          description="Before creating queries, you need to establish a database connection first"
+          description="Before creating queries, establish a database connection"
           actions={[
             {
               label: 'Edit Connection',
