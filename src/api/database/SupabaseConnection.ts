@@ -4,13 +4,14 @@ import {
   PostgrestFilterBuilder,
 } from '@supabase/postgrest-js';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { OpenAPIV2 } from 'openapi-types';
 import {
+  formatParams,
   handleError,
   log,
   Modifier,
   ModifierType,
   QueryInfo,
-  QueryReturnCount,
   QueryReturnType,
   QueryType,
 } from '../../utils';
@@ -52,14 +53,18 @@ export class SupabaseConnection {
     return this.supabase.auth.user();
   }
 
-  query(qi: QueryInfo): PostgrestBuilder<Record<string, unknown>> {
+  query(
+    qi: QueryInfo,
+    schema: OpenAPIV2.Document | undefined
+  ): PostgrestBuilder<Record<string, unknown>> {
     let stmt: PostgrestFilterBuilder<Record<string, unknown>>;
     if (qi.type === QueryType.RPC) {
-      stmt = this.supabase.rpc(qi.rpc, qi.params);
+      const params = formatParams(qi.rpc, qi.params, schema);
+      stmt = this.supabase.rpc(qi.rpc, params);
     } else {
       const options =
         qi.returnInfo.type === QueryReturnType.COUNT
-          ? { count: (qi.returnInfo as QueryReturnCount).count, head: true }
+          ? { count: qi.returnInfo.count, head: true }
           : undefined;
       stmt = this.supabase.from(qi.table).select(qi.select, options);
     }

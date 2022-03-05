@@ -1,43 +1,40 @@
+import { useEffect, useMemo } from 'react';
 import { StyleSheet } from 'react-native';
+import { Icons, Param, Spacings, update, UpdateState } from '../../utils';
+import { useRPCParamInfo, useRPCParams } from '../../utils/hooks';
 import {
-  alert,
-  Icons,
-  IconsOutlined,
-  Param,
-  Spacings,
-  update,
-  UpdateState,
-} from '../../utils';
-import { Button, Checkbox, IconButton, TextField, View } from '../base';
+  Checkbox,
+  DropdownPicker,
+  IconButton,
+  TextField,
+  toOptions,
+  View,
+} from '../base';
 import Label from '../base/io/Label';
 
 type Props = {
+  rpc: string;
   draft: Param;
   onUpdate: UpdateState<Param>;
   onRemove: VoidFunction;
 };
 
-const EditQueryTypeRPCParam = ({ onUpdate, draft, onRemove }: Props) => {
-  const typeOptions: { text: string; type: Param['type'] }[] = [
-    { text: 'String', type: 'string' },
-    { text: 'Number', type: 'number' },
-    { text: 'Boolean', type: 'boolean' },
-  ];
+const EditQueryTypeRPCParam = ({ rpc, onUpdate, draft, onRemove }: Props) => {
+  const params = useRPCParams(rpc);
+  const paramNames = useMemo(
+    () => (params ? Object.keys(params) : []),
+    [params]
+  );
+  const paramInfo = useRPCParamInfo(rpc, draft.name);
 
-  const onPressTypeChange = () => {
-    alert(
-      'Data Type',
-      'The value will be parsed into the selected data type',
-      typeOptions.map(({ text, type }) => ({
-        text,
-        onPress: () => onUpdate((old) => ({ ...old, type })),
-        style: type === draft.type ? 'destructive' : undefined,
-      }))
-    );
-  };
+  useEffect(() => {
+    if (paramNames.length && !paramNames.includes(draft.name)) {
+      onUpdate({ ...draft, name: paramNames[0] });
+    }
+  }, [draft, onUpdate, paramNames]);
 
   const renderValue = () => {
-    if (draft.type === 'boolean') {
+    if (paramInfo?.type === 'boolean') {
       return (
         <View style={styles.checkbox}>
           <Label label="Value" />
@@ -62,7 +59,7 @@ const EditQueryTypeRPCParam = ({ onUpdate, draft, onRemove }: Props) => {
           onChangeText={update('value', onUpdate)}
           autoCapitalize="none"
           autoCorrect={false}
-          keyboardType={draft.type === 'number' ? 'numeric' : undefined}
+          keyboardType={paramInfo?.type === 'integer' ? 'numeric' : undefined}
           style={styles.value}
         />
       );
@@ -71,31 +68,14 @@ const EditQueryTypeRPCParam = ({ onUpdate, draft, onRemove }: Props) => {
 
   return (
     <View row flex style={styles.container}>
-      <TextField
+      <DropdownPicker
         label="Parameter"
-        value={draft.name}
-        onChangeText={update('name', onUpdate)}
-        autoCapitalize="none"
-        autoCorrect={false}
+        selectedValue={draft.name}
+        onValueChange={update('name', onUpdate)}
+        options={toOptions(paramNames)}
         style={styles.name}
       />
       {renderValue()}
-      <View center>
-        <View row center>
-          <Label label="Type" />
-        </View>
-        <Button
-          icon={{
-            name: {
-              number: IconsOutlined.hash,
-              string: IconsOutlined.text,
-              boolean: IconsOutlined.checkbox,
-            }[draft.type],
-          }}
-          ghost
-          onPress={onPressTypeChange}
-        />
-      </View>
       <View center>
         <Label label=" " />
         <IconButton name={Icons.close} onPress={onRemove} />

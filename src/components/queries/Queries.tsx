@@ -1,5 +1,6 @@
 import { List } from '@ui-kitten/components';
 import { Pressable, StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   IconsOutlined,
   IconType,
@@ -42,10 +43,13 @@ const getLabel = (query: QueryInfo): string => {
 };
 
 const Queries = ({ queries, onGoToQuery, onDuplicateQuery }: Props) => {
+  const paddingBottom = useSafeAreaInsets().bottom;
   return (
     <List
       data={queries}
-      contentContainerStyle={queries.length === 0 ? styles.flex : undefined}
+      contentContainerStyle={
+        queries.length === 0 ? styles.flex : { paddingBottom }
+      }
       ListEmptyComponent={
         <EmptyState
           title="Nothing Here Yet"

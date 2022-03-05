@@ -19,9 +19,11 @@ export const useChartTheme = (): VictoryThemeDefinition => {
   const primaryColor = useStatusColor();
   return {
     chart: {
+      animate: true,
       padding: { right: Spacings.s5, left: 50, top: Spacings.s5, bottom: 50 },
     },
     axis: {
+      animate: true,
       style: {
         grid: { stroke: borderColor },
         axis: { stroke: textColor, fill: textColor, color: textColor },

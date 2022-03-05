@@ -6,6 +6,9 @@ import {
   useImperativeHandle,
   useRef,
 } from 'react';
+import { StyleSheet } from 'react-native';
+import { Spacings } from '../../../../utils';
+import Icon from '../../Icon';
 import View from '../../View';
 import Label from '../Label';
 import { PickerProps } from './pickerTypes';
@@ -34,7 +37,12 @@ const DropdownPicker = forwardRef(
     return (
       <View style={style}>
         {label ? (
-          <Label label={label} icon={icon} tooltip={description} />
+          <Label
+            label={label}
+            icon={icon}
+            tooltip={description}
+            style={styles.label}
+          />
         ) : null}
 
         <Select
@@ -46,8 +54,16 @@ const DropdownPicker = forwardRef(
             onValueChange(options[selection.row].value);
           }}
         >
-          {options.map((item) => (
-            <SelectItem key={item.value} title={item.label} />
+          {options.map(({ value, label: optionLabel, icon: optionIcon }) => (
+            <SelectItem
+              key={value}
+              title={optionLabel}
+              accessoryRight={
+                optionIcon
+                  ? (props) => <Icon name={optionIcon} {...props} />
+                  : undefined
+              }
+            />
           ))}
         </Select>
       </View>
@@ -56,3 +72,5 @@ const DropdownPicker = forwardRef(
 ) as <T>(p: Props<T> & { ref?: Ref<Select> }) => ReactElement;
 
 export default DropdownPicker;
+
+const styles = StyleSheet.create({ label: { marginBottom: Spacings.s1 } });

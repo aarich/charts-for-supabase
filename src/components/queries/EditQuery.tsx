@@ -1,4 +1,4 @@
-import { QueryInfo, UpdateState } from '../../utils';
+import { QueryInfo, QueryType, UpdateState } from '../../utils';
 import { TextField } from '../base';
 import EditModifiers from './EditModifiers';
 import EditQueryType from './EditQueryType';
@@ -19,6 +19,7 @@ const EditQuery = ({ onUpdate, draft }: Props) => {
       />
       <EditQueryType draft={draft} onUpdate={onUpdate} />
       <EditReturnType
+        table={draft.type === QueryType.SELECT ? draft.table : undefined}
         draft={draft.returnInfo}
         onUpdate={(returnInfo) => onUpdate({ ...draft, returnInfo })}
       />

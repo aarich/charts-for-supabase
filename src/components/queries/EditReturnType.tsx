@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import {
   QueryReturnCount,
@@ -7,14 +7,24 @@ import {
   QueryReturnType,
   Spacings,
 } from '../../utils';
-import { DropdownPicker, RadioGroupPicker, TextField, View } from '../base';
+import { useColumns } from '../../utils/hooks';
+import {
+  DropdownPicker,
+  RadioGroupPicker,
+  TextField,
+  toOptions,
+  View,
+} from '../base';
 
 type Props = {
+  table: string | undefined;
   draft: QueryReturnInfo;
   onUpdate: (updates: QueryReturnInfo) => void;
 };
 
-const EditReturnType = ({ onUpdate, draft }: Props) => {
+const EditReturnType = ({ onUpdate, draft, table }: Props) => {
+  const columns = useColumns(table);
+
   const [cachedInfo, setCachedInfo] = useState<{
     xColumn?: string;
     yColumn?: string;
@@ -55,6 +65,22 @@ const EditReturnType = ({ onUpdate, draft }: Props) => {
     }
   };
 
+  useEffect(() => {
+    if (columns && draft.type === QueryReturnType.LINEAR) {
+      let { xColumn, yColumn } = draft;
+      if (!columns.includes(xColumn)) {
+        xColumn = columns[0];
+      }
+      if (!columns.includes(yColumn)) {
+        yColumn = columns[0];
+      }
+      if (xColumn === draft.xColumn && yColumn === draft.yColumn) {
+        return;
+      }
+      onUpdate({ ...draft, xColumn, yColumn });
+    }
+  }, [columns, draft, onUpdate]);
+
   const renderReturnTypeInfo = () => {
     switch (draft.type) {
       case QueryReturnType.COUNT:
@@ -77,22 +103,43 @@ const EditReturnType = ({ onUpdate, draft }: Props) => {
       case QueryReturnType.LINEAR:
         return (
           <>
-            <TextField
-              label="X Column"
-              value={draft.xColumn}
-              onChangeText={(xColumn) => onUpdate({ ...draft, xColumn })}
-              autoCapitalize="none"
-              autoCorrect={false}
-              style={styles.item}
-            />
-            <TextField
-              label="Y Column"
-              value={draft.yColumn}
-              onChangeText={(yColumn) => onUpdate({ ...draft, yColumn })}
-              autoCapitalize="none"
-              autoCorrect={false}
-              style={styles.item}
-            />
+            {columns ? (
+              <>
+                <DropdownPicker
+                  label="Independent Column"
+                  selectedValue={draft.xColumn}
+                  onValueChange={(xColumn) => onUpdate({ ...draft, xColumn })}
+                  options={toOptions(columns)}
+                  style={styles.item}
+                />
+                <DropdownPicker
+                  label="Dependent Column"
+                  selectedValue={draft.yColumn}
+                  onValueChange={(yColumn) => onUpdate({ ...draft, yColumn })}
+                  options={toOptions(columns)}
+                  style={styles.item}
+                />
+              </>
+            ) : (
+              <>
+                <TextField
+                  label="Independent Column"
+                  value={draft.xColumn}
+                  onChangeText={(xColumn) => onUpdate({ ...draft, xColumn })}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  style={styles.item}
+                />
+                <TextField
+                  label="Dependent Column"
+                  value={draft.yColumn}
+                  onChangeText={(yColumn) => onUpdate({ ...draft, yColumn })}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  style={styles.item}
+                />
+              </>
+            )}
             <RadioGroupPicker
               style={styles.item}
               label="X Axis Scale"

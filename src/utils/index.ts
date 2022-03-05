@@ -7,6 +7,7 @@ export * from './interactions';
 export * from './log';
 export * from './misc';
 export * from './mockdata';
+export * from './openapi';
 export * from './secure';
 export * from './style';
 export * from './types';

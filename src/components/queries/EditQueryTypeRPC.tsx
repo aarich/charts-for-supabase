@@ -1,11 +1,15 @@
+import { useEffect, useMemo } from 'react';
+import { useSetting } from '../../redux/selectors';
 import {
+  AppSetting,
+  getRPCNames,
   Icons,
   Param,
   QueryInfo,
   RPCQueryInfo,
   UpdateState,
 } from '../../utils';
-import { Button, TextField, View } from '../base';
+import { Button, DropdownPicker, View } from '../base';
 import EditQueryTypeRPCParam from './EditQueryTypeRPCParam';
 
 type Props = {
@@ -13,12 +17,9 @@ type Props = {
   onUpdate: UpdateState<QueryInfo>;
 };
 
-const EditQueryTypeRPCParams = ({ onUpdate, draft }: Props) => {
+const EditQueryTypeRPC = ({ onUpdate, draft }: Props) => {
   const onAdd = () =>
-    onUpdate({
-      ...draft,
-      params: [...draft.params, { name: '', type: 'string', value: '' }],
-    });
+    onUpdate({ ...draft, params: [...draft.params, { name: '', value: '' }] });
 
   const onRemoveParamAt = (index: number) => {
     const params = [
@@ -37,19 +38,27 @@ const EditQueryTypeRPCParams = ({ onUpdate, draft }: Props) => {
     onUpdate({ ...draft, params });
   };
 
+  const schema = useSetting(AppSetting.SUPABASE_SCHEMA);
+  const names = useMemo(() => getRPCNames(schema), [schema]);
+
+  useEffect(() => {
+    if (names?.length && !names.includes(draft.rpc)) {
+      onUpdate((old) => ({ ...old, rpc: names[0] }));
+    }
+  }, [draft.rpc, names, onUpdate]);
+
   return (
     <>
-      <TextField
+      <DropdownPicker
         label="RPC"
-        value={draft.rpc}
-        onChangeText={(rpc) => onUpdate({ ...draft, rpc })}
-        autoCapitalize="none"
-        autoCorrect={false}
-        placeholder="function to call"
+        options={names?.map((value) => ({ label: value, value })) ?? []}
+        selectedValue={draft.rpc}
+        onValueChange={(rpc) => onUpdate({ ...draft, rpc, params: [] })}
       />
       {draft.params.map((param, index) => (
         <EditQueryTypeRPCParam
           key={`${index}-${param.name}`}
+          rpc={draft.rpc}
           draft={param}
           onRemove={() => onRemoveParamAt(index)}
           onUpdate={(action) => {
@@ -73,4 +82,4 @@ const EditQueryTypeRPCParams = ({ onUpdate, draft }: Props) => {
   );
 };
 
-export default EditQueryTypeRPCParams;
+export default EditQueryTypeRPC;

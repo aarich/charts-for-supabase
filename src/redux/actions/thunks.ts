@@ -43,14 +43,14 @@ const validateReturnType = (
 
 export const saveQuery =
   (query: QueryInfo): AppThunk<string> =>
-  async (dispatch) => {
+  async (dispatch, getState) => {
     const supabase = connection.get();
-
     if (!supabase) {
       throw new Error('Supabase not configured');
     }
 
-    const { data, count } = await supabase.query(query);
+    const schema = getState().settings[AppSetting.SUPABASE_SCHEMA];
+    const { data, count } = await supabase.query(query, schema);
 
     validateReturnType(data, count, query.returnInfo);
 
@@ -61,9 +61,22 @@ export const saveQuery =
 
 export const saveConnection =
   (config: ConnectionInfo, password: string): AppThunk =>
-  (dispatch) => {
+  async (dispatch) => {
     connection.init(config, password);
 
+    const response = await fetch(`${config.url}/rest/v1/?apikey=${config.key}`);
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('json')) {
+      const text = await response.text();
+      throw new Error(text);
+    }
+    const schema = await response.json();
+
+    if (schema.message) {
+      throw new Error(schema.message);
+    }
+
+    dispatch(setAppSetting({ [AppSetting.SUPABASE_SCHEMA]: schema }));
     dispatch(setAppSetting({ [AppSetting.SUPABASE_CONFIG]: config }));
     savePassword(password);
 

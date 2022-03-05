@@ -73,6 +73,7 @@ export const isValidParam = <T>(
 
 export enum AppSetting {
   SUPABASE_CONFIG = 'SUPABASE_CONFIG',
+  SUPABASE_SCHEMA = 'SUPABASE_SCHEMA',
   HAS_REQUESTED_REVIEW = 'HAS_REQUESTED_REVIEW',
 }
 
@@ -164,7 +165,6 @@ interface BaseQueryInfo {
 
 export type Param = {
   name: string;
-  type: 'string' | 'number' | 'boolean';
   value: string;
 };
 

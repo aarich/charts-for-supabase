@@ -4,10 +4,10 @@ import { SupabaseConnection } from './SupabaseConnection';
 
 const connection: {
   current?: SupabaseConnection;
-  init: (config: ConnectionInfo, password: string) => void;
+  init: (config: ConnectionInfo, password: string) => ReturnType<Body['json']>;
   get: () => SupabaseConnection | undefined;
 } = {
-  init(config, password) {
+  async init(config, password) {
     connection.current?.destroy();
     connection.current = new SupabaseConnection(config.url, config.key);
     connection.current.signIn(config.email, password);

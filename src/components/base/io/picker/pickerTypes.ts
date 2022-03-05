@@ -1,7 +1,7 @@
 import { StyleProp, ViewStyle } from 'react-native';
 import { IconType } from '../../../../utils';
 
-export type PickerOption<T> = { label: string; value: T };
+export type PickerOption<T> = { label: string; value: T; icon?: IconType };
 
 export type PickerProps<T> = {
   onValueChange: (newValue: T) => void;
@@ -12,3 +12,6 @@ export type PickerProps<T> = {
   icon?: IconType;
   style?: StyleProp<ViewStyle>;
 };
+
+export const toOptions = (values: string[]): PickerOption<string>[] =>
+  values.map((value) => ({ label: value, value }));

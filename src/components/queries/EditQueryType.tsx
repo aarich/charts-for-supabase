@@ -1,14 +1,8 @@
 import { useState } from 'react';
-import { StyleSheet } from 'react-native';
-import {
-  Param,
-  QueryInfo,
-  QueryType,
-  Spacings,
-  UpdateState,
-} from '../../utils';
-import { ButtonGroupPicker, TextField } from '../base';
-import EditQueryTypeRPCParams from './EditQueryTypeRPCParams';
+import { Param, QueryInfo, QueryType, UpdateState } from '../../utils';
+import { ButtonGroupPicker } from '../base';
+import EditQueryTypeRPC from './EditQueryTypeRPC';
+import EditQueryTypeSelect from './EditQueryTypeSelect';
 
 type Props = {
   draft: QueryInfo;
@@ -66,32 +60,12 @@ const EditQueryType = ({ onUpdate, draft }: Props) => {
         onValueChange={handleQueryTypeChange}
       />
       {draft.type === QueryType.RPC ? (
-        <EditQueryTypeRPCParams draft={draft} onUpdate={onUpdate} />
+        <EditQueryTypeRPC draft={draft} onUpdate={onUpdate} />
       ) : (
-        <>
-          <TextField
-            label="From"
-            value={draft.table}
-            onChangeText={(table) => onUpdate({ ...draft, table })}
-            autoCapitalize="none"
-            autoCorrect={false}
-            placeholder="table/view name"
-          />
-          <TextField
-            label="Select"
-            value={draft.select}
-            onChangeText={(select) => onUpdate({ ...draft, select })}
-            autoCapitalize="none"
-            autoCorrect={false}
-            style={styles.item}
-            placeholder="* or comma separated list"
-          />
-        </>
+        <EditQueryTypeSelect draft={draft} onUpdate={onUpdate} />
       )}
     </>
   );
 };
 
 export default EditQueryType;
-
-const styles = StyleSheet.create({ item: { marginTop: Spacings.s2 } });
