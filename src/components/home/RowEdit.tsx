@@ -42,7 +42,7 @@ const RowEdit = ({
   }, [onUpdate, queryOptions, row]);
 
   const renderAddChartButton = () => {
-    if (charts.length < Platform.select({ web: 4, default: 2 })) {
+    if (charts.length < Platform.select({ web: 4, default: 3 })) {
       return (
         <Pressable onPress={onAddChart} style={styles.addChart}>
           <Layout l4 style={styles.addChart}>

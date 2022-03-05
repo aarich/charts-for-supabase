@@ -1,9 +1,9 @@
 // eslint-disable-next-line no-restricted-imports
 import Constants from 'expo-constants';
 
-const myVersion = '3';
+const myVersion = '2';
 
-const IS_SCREENSHOTTING = true;
+const IS_SCREENSHOTTING = false;
 
 export const MyConstants = {
   isScreenshotting: __DEV__ && IS_SCREENSHOTTING,

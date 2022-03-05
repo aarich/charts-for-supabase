@@ -78,6 +78,15 @@ export default () => {
 
         {isMobile ? renderButtons() : renderScreenshots()}
         {isMobile ? renderScreenshots() : renderButtons()}
+
+        <Text center style={styles.browse}>
+          <Anchor
+            onPress={() =>
+              openURL(`${MyConstants.githubUrl}/issues/new/choose`)
+            }
+            text="Contact"
+          />
+        </Text>
       </ScrollView>
     </Layout>
   );

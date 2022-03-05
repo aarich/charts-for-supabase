@@ -5,11 +5,12 @@ import { DrawerParamList } from '../utils/types';
 type Options = LinkingOptions<DrawerParamList>;
 
 const config: Options['config'] = {
+  initialRouteName: 'RootStack',
   screens: {
     RootStack: {
       initialRouteName: 'Home',
       screens: {
-        Home: '/',
+        Home: '/home',
         Queries: '/queries',
         QueryEdit: '/queries/:id',
         Help: '/help',
@@ -40,7 +41,7 @@ const LinkingConfiguration: Options = {
 
     return getPathFromState(state, config);
   },
-  prefixes: [Linking.createURL('/'), Linking.createURL('')],
+  prefixes: [Linking.createURL('/')],
   config,
 };
 

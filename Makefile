@@ -13,7 +13,9 @@ build-prep:
 	node scripts/updateConfig.js $(RELEASE_NUM) $(DEST)
 
 build-web: build-prep
+	cp ./assets/images/icon.png ./web/banner.png
 	expo build:web
+	rm ./web/banner.png
 	@osascript -e 'display notification "See terminal" with title "Attention Required"'
 	-bash scripts/deploy.sh
 

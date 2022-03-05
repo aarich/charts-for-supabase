@@ -7,8 +7,36 @@ import {
 } from '@ui-kitten/components';
 import { RenderProp } from '@ui-kitten/components/devsupport';
 import { Fragment, ReactNode } from 'react';
-import { Icon, Text, View } from '../components/base';
-import { Icons, isValidParam } from '../utils';
+import { Platform, StyleSheet } from 'react-native';
+import { Anchor, Icon, Text, View } from '../components/base';
+import {
+  Icons,
+  isValidParam,
+  MyConstants,
+  RootStackParamList,
+  Spacings,
+} from '../utils';
+
+const getGHUrl = (route: keyof RootStackParamList): string => {
+  let dir: string;
+  switch (route) {
+    case 'About':
+    case 'App':
+    case 'Feedback':
+    case 'Help':
+      dir = 'about';
+      break;
+    case 'Home':
+    case 'HomeEdit':
+      dir = 'home';
+      break;
+    case 'Queries':
+    case 'QueryEdit':
+      dir = 'queries';
+      break;
+  }
+  return `${MyConstants.githubUrl}/blob/master/src/screens/${dir}/${route}Screen.tsx`;
+};
 
 export default <T extends NativeStackHeaderProps>(topInsets: number) =>
   ({ options, navigation, route, ...others }: T) => {
@@ -27,7 +55,7 @@ export default <T extends NativeStackHeaderProps>(topInsets: number) =>
     const back = 'back';
     if ('pop' in navigation && isValidParam(back, others) && others[back]) {
       const goBack = () => navigation.pop();
-      canGoBack = true;
+      canGoBack = false;
 
       BackAction = () => (
         <TopNavigationAction
@@ -45,6 +73,20 @@ export default <T extends NativeStackHeaderProps>(topInsets: number) =>
       if (headerRight) {
         headerActions.push(
           <Fragment key="action">{headerRight({ canGoBack })}</Fragment>
+        );
+      }
+
+      if (Platform.OS === 'web') {
+        headerActions.push(
+          <View center key="gh">
+            <Anchor
+              url={getGHUrl(route.name as keyof RootStackParamList)}
+              text="GitHub"
+              showIcon
+              style={styles.ghUrl}
+              status="basic"
+            />
+          </View>
         );
       }
 
@@ -68,3 +110,5 @@ export default <T extends NativeStackHeaderProps>(topInsets: number) =>
       </>
     );
   };
+
+const styles = StyleSheet.create({ ghUrl: { marginHorizontal: Spacings.s4 } });

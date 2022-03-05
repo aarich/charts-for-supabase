@@ -6,19 +6,21 @@ import { useStatusColor } from '../../utils/hooks';
 import Icon from './Icon';
 import Text from './io/Text';
 
-type Props = { url?: string; text: string; showIcon?: boolean } & Omit<
-  ComponentPropsWithoutRef<typeof Text>,
-  'status'
->;
+type Props = {
+  url?: string;
+  text: string;
+  showIcon?: boolean;
+} & ComponentPropsWithoutRef<typeof Text>;
 
 const Anchor = ({
   url,
   text,
   showIcon,
   onPress: onPressProp,
+  status = 'primary',
   ...textProps
 }: Props) => {
-  const color = useStatusColor();
+  const color = useStatusColor(status);
 
   const onPress =
     onPressProp ??
@@ -32,7 +34,7 @@ const Anchor = ({
   const iconSize = getIconSize(textProps.category);
 
   return (
-    <Text status="primary" onPress={onPress} {...textProps}>
+    <Text status={status} onPress={onPress} {...textProps}>
       {text}
       <>
         {showIcon ? (

@@ -5,7 +5,7 @@ import FeedbackScreen from '../screens/about/FeedbackScreen';
 import HelpScreen from '../screens/about/HelpScreen';
 import HomeEditScreen from '../screens/home/HomeEditScreen';
 import HomeScreen from '../screens/home/HomeScreen';
-import QueryCollectionScreen from '../screens/queries/QueryCollectionScreen';
+import QueriesScreen from '../screens/queries/QueriesScreen';
 import QueryEditScreen from '../screens/queries/QueryEditScreen';
 import { MyConstants, RootStackScreenInfo } from '../utils';
 
@@ -19,7 +19,7 @@ export default asScreens<RootStackScreenInfo>([
   { name: 'HomeEdit', screen: HomeEditScreen, options: { title: 'Edit Home' } },
 
   // Content
-  { name: 'Queries', screen: QueryCollectionScreen },
+  { name: 'Queries', screen: QueriesScreen },
   { name: 'QueryEdit', screen: QueryEditScreen, options: { title: 'Edit' } },
 
   // Info
