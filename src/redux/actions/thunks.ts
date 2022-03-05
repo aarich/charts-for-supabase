@@ -1,7 +1,9 @@
+import { Platform } from 'react-native';
 import connection from '../../api/database';
 import {
   AppSetting,
   ConnectionInfo,
+  log,
   QueryInfo,
   QueryReturnInfo,
   QueryReturnType,
@@ -64,11 +66,32 @@ export const saveConnection =
   async (dispatch) => {
     connection.init(config, password);
 
-    const response = await fetch(`${config.url}/rest/v1/?apikey=${config.key}`);
-    const contentType = response.headers.get('content-type');
+    const { url, key } = config;
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      throw new Error('Invalid URL');
+    }
+
+    const schemaUrl = `${url}/rest/v1/?apikey=${key}`;
+    const response = await fetch(schemaUrl);
+    const { headers, status, statusText } = response;
+    const contentType = headers.get('content-type');
     if (!contentType || !contentType.includes('json')) {
       const text = await response.text();
-      throw new Error(text);
+      log('Error connecting to Supabase', {
+        schemaUrl,
+        headers,
+        status,
+        statusText,
+        responseBody: text,
+      });
+      throw new Error(
+        `Error connecting to Supabase. ${Platform.select({
+          web: 'Check console for details.',
+          default:
+            'Check that the info you provided is correct. What we tried:\n' +
+            schemaUrl,
+        })}`
+      );
     }
     const schema = await response.json();
 
