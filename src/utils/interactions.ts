@@ -1,5 +1,6 @@
 import { EvaStatus } from '@ui-kitten/components/devsupport';
-import { AlertButton } from 'react-native';
+import { openBrowserAsync } from 'expo-web-browser';
+import { AlertButton, Platform } from 'react-native';
 import { PickerOption } from '../components/base';
 import { log } from './log';
 
@@ -92,4 +93,15 @@ export const handleError = (error: unknown) => {
   log('Error', { error });
 
   alert('Error', message);
+};
+
+export const TWITTER_PROFILE = 'mr_arich';
+const twitterProfileUrl = `https://twitter.com/${TWITTER_PROFILE}`;
+
+export const openTwitter = () => {
+  if (Platform.OS === 'web') {
+    window.open(twitterProfileUrl, '_blank');
+  } else {
+    openBrowserAsync(twitterProfileUrl);
+  }
 };

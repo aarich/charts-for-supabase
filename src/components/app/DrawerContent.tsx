@@ -6,14 +6,14 @@ import {
 } from '@ui-kitten/components';
 import { setString } from 'expo-clipboard';
 import { ReactElement } from 'react';
-import { Platform, StyleProp, StyleSheet, ViewStyle } from 'react-native';
+import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import connection from '../../api/database';
-import { openTwitter } from '../../screens/about/TwitterTimelineScreen';
 import {
   alert,
   IconsOutlined,
   IconType,
   MyConstants,
+  openTwitter,
   RootStackParamList,
   showConnectionSettings,
   Spacings,
@@ -30,11 +30,16 @@ type Props = {
 
 const CONNECTION = 'Edit Connection';
 const RESET = 'Reset App';
+const UPDATES = 'Updates';
 
 type MenuItem = {
   icon: IconType;
   title?: string;
-  dest: keyof RootStackParamList | typeof CONNECTION | typeof RESET;
+  dest:
+    | keyof RootStackParamList
+    | typeof CONNECTION
+    | typeof RESET
+    | typeof UPDATES;
 };
 
 const items: MenuItem[] = [
@@ -46,7 +51,7 @@ const items: MenuItem[] = [
 const more: MenuItem[] = [
   { icon: IconsOutlined.info, dest: 'About' },
   { icon: IconsOutlined.bulb, dest: 'Feedback' },
-  { icon: IconsOutlined.twitter, title: 'Updates', dest: 'Twitter' },
+  { icon: IconsOutlined.twitter, dest: UPDATES },
   { icon: IconsOutlined.refresh, dest: RESET },
 ];
 
@@ -59,19 +64,20 @@ export function DrawerContent({
   const onPressItem = (dest: MenuItem['dest']) => {
     switch (dest) {
       case CONNECTION:
-        showConnectionSettings();
         onToggleDrawer();
+        showConnectionSettings();
         break;
       case RESET:
         onToggleDrawer();
         onResetApp();
         break;
+      case UPDATES:
+        onToggleDrawer();
+        openTwitter();
+        break;
       default:
-        if (Platform.OS === 'web' && dest === 'Twitter') {
-          openTwitter();
-        } else {
-          onGoToScreen(dest);
-        }
+        onGoToScreen(dest);
+
         break;
     }
   };
@@ -135,6 +141,7 @@ export function DrawerContent({
               label={`${client ? '' : 'Not '} Connected to Supabase`}
               status={client ? 'success' : 'danger'}
               onPress={onPressConnection}
+              size="small"
             />
           </View>
         </View>

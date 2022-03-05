@@ -38,7 +38,6 @@ export type RootStackParamList = {
   App: undefined;
   About: undefined;
   Help: undefined;
-  Twitter: undefined;
   Feedback: undefined;
 
   // content

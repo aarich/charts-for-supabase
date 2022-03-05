@@ -3,7 +3,6 @@ import AboutScreen from '../screens/about/AboutScreen';
 import AppScreen from '../screens/about/AppScreen';
 import FeedbackScreen from '../screens/about/FeedbackScreen';
 import HelpScreen from '../screens/about/HelpScreen';
-import TwitterTimelineScreen from '../screens/about/TwitterTimelineScreen';
 import HomeEditScreen from '../screens/home/HomeEditScreen';
 import HomeScreen from '../screens/home/HomeScreen';
 import QueryCollectionScreen from '../screens/queries/QueryCollectionScreen';
@@ -26,7 +25,6 @@ export default asScreens<RootStackScreenInfo>([
   // Info
   { name: 'About', screen: AboutScreen },
   { name: 'Help', screen: HelpScreen },
-  { name: 'Twitter', screen: TwitterTimelineScreen },
   { name: 'Feedback', screen: FeedbackScreen },
   {
     name: 'App',

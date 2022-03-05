@@ -73,10 +73,13 @@ const Chart = forwardRef<RNView, Props>(
       <Card
         onPress={onPressOptions}
         style={styles.card}
-        footer={
+        header={
           <View row spread>
-            <Text category="s1">{query.name}</Text>
+            <Text category="s1" style={styles.header}>
+              {query.name}
+            </Text>
             <IconButton
+              style={styles.header}
               status="basic"
               name={IconsOutlined.moreV}
               onPress={onPressOptions}
@@ -100,4 +103,7 @@ const Chart = forwardRef<RNView, Props>(
 
 export default Chart;
 
-const styles = StyleSheet.create({ card: { paddingHorizontal: Spacings.s2 } });
+const styles = StyleSheet.create({
+  card: { paddingHorizontal: Spacings.s2 },
+  header: { margin: Spacings.s2 },
+});

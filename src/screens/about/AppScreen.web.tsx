@@ -33,10 +33,10 @@ export default () => {
 
   const renderScreenshots = () => (
     <View row style={styles.screenshots} center>
-      {[0, 1, 2, 3].map((i) => (
+      {['Home', 'Query', 'Edit'].map((n) => (
         <Image
-          key={i}
-          source={require(`../../../assets/images/screenshot${i}.png`)}
+          key={n}
+          source={require(`../../../screenshots/12 ${n}.png`)}
           style={imageStyle}
         />
       ))}
@@ -70,10 +70,10 @@ export default () => {
           {MyConstants.manifest?.name}
         </Text>
         <Text category="h6" center>
-          Discuss What&apos;ll Happen
+          Custom Analytics Client for Supabase
         </Text>
         <Text center style={styles.browse}>
-          <Anchor onPress={() => linkTo('/home')} text="Start browsing" />
+          <Anchor onPress={() => linkTo('/home')} text="Get started" />
         </Text>
 
         {isMobile ? renderButtons() : renderScreenshots()}

@@ -12,7 +12,7 @@ const countConfig = {
 const chartConfig = {
   type: QueryType.SELECT,
   table: 'post',
-  select: 'id',
+  select: 'date, count',
   returnInfo: {
     type: QueryReturnType.LINEAR,
     xColumn: 'date',
@@ -22,25 +22,19 @@ const chartConfig = {
 };
 
 const queryState = {
-  usercount: {
-    id: 'usercount',
-    name: 'Total Users',
-    ...countConfig,
-  },
+  usercount: { ...countConfig, id: 'usercount', name: 'Total Users' },
   postcount: {
+    ...countConfig,
     id: 'postcount',
     name: 'Total Posts',
-    ...countConfig,
+    table: 'post',
   },
-  posts: {
-    id: 'posts',
-    name: 'Posts Created',
-    ...chartConfig,
-  },
+  posts: { ...chartConfig, id: 'posts', name: 'Posts Created' },
   notifications: {
+    ...chartConfig,
     id: 'posts',
     name: 'Notifications Delivered',
-    ...chartConfig,
+    table: 'notification',
   },
 };
 const dashboardState: DashboardState = {

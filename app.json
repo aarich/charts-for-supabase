@@ -26,7 +26,7 @@
       "**/*"
     ],
     "ios": {
-      "buildNumber": "1",
+      "buildNumber": "2",
       "supportsTablet": true,
       "bundleIdentifier": "com.mrarich.charts",
       "appStoreUrl": "https://apps.apple.com/app/apple-store/id1612680145?pt=117925864&ct=aj&mt=8",

@@ -6,12 +6,12 @@ const fs = require('fs');
 
 const appReleaseDashed = process.argv[2]; // app version, e.g. 3-0
 const appRelease = appReleaseDashed.replace('-', '.');
-const dest = process.argv[3]; // build destination, e.g. WEB/ANDROID/IOS/NONE
+const dest = process.argv[3]; // native build destination, e.g. ANDROID/IOS/ALL/NONE
 
 const { expo } = config;
 const { ios, android } = expo;
 
-if (dest === 'IOS') {
+if (['ALL', 'IOS'].includes(dest)) {
   if (expo.version !== appRelease) {
     // We're on a new version, reset ios build number
     ios.buildNumber = '1';
@@ -19,7 +19,7 @@ if (dest === 'IOS') {
     ios.buildNumber = `${parseInt(config.expo.ios.buildNumber) + 1}`;
   }
   console.log(`\nios.buildNumber set to ${ios.buildNumber}\n`);
-} else if (dest === 'ANDROID') {
+} else if (['ALL', 'ANDROID'].includes(dest)) {
   android.versionCode += 1;
   console.log(`\nandroid.versionCode set to ${android.versionCode}\n`);
 } else {

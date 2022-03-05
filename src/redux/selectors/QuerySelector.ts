@@ -2,12 +2,12 @@ import { MOCK_DATA, MyConstants, QueryInfo } from '../../utils';
 import { useAppSelector } from '../store';
 
 const useQueryState = () => {
-  const state = useAppSelector((state) => state.queries);
+  const queries = useAppSelector((state) => state.queries);
   if (MyConstants.isScreenshotting) {
     return MOCK_DATA.queries;
   }
 
-  return state;
+  return queries;
 };
 
 export const useQueries = (): QueryInfo[] => Object.values(useQueryState());

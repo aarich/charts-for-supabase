@@ -18,17 +18,18 @@ const elements = [
   ),
   h4('Acknowledgements'),
   p(
-    'This app is not affiliated with Supabase in any way (other than the developer being a happy customer).\nCopyrights and Trademarks may be owned by Supabase.\n'
+    'This app is not affiliated with Supabase in any way (other than the developer being a happy customer).\nCopyrights and trademarks may be owned by Supabase.\n'
   ),
   p(
     'Thanks to the following open source software and free services for making this project possible.'
   ),
   [
-    { name: 'Supabase', url: 'supabase.com' },
     { name: 'Expo', url: 'expo.dev' },
     { name: 'React Native', url: 'reactnative.dev' },
     { name: 'React Query', url: 'react-query.tanstack.com' },
+    { name: 'Supabase', url: 'supabase.com' },
     { name: 'UI Kitten', url: 'akveo.github.io/react-native-ui-kitten' },
+    { name: 'Victory Charts', url: 'formidable.com/open-source/victory/' },
   ].map((link) => (
     <Fragment key={link.name}>{p(a(link.url, link.name))}</Fragment>
   )),
@@ -40,7 +41,7 @@ const elements = [
   ),
   p(),
   p(
-    `${MyConstants.manifest?.name} is open source! `,
+    `Want to see your name here? ${MyConstants.manifest?.name} is open source! `,
     a('github.com/aarich/charts-for-supabase', 'Check it out on GitHub'),
     ' and, if you like, make an improvement. We are also built on top of great open source software like the ones listed above.'
   ),

@@ -12,6 +12,11 @@ build-prep:
 	@echo "Updating app.json"
 	node scripts/updateConfig.js $(RELEASE_NUM) $(DEST)
 
+build-web: build-prep
+	expo build:web
+	@osascript -e 'display notification "See terminal" with title "Attention Required"'
+	-bash scripts/deploy.sh
+
 build-ios:
 	$(MAKE) build-prep DEST=IOS
 	-eas build -p ios --profile production --auto-submit --non-interactive --no-wait
@@ -21,7 +26,7 @@ build-android:
 	-eas build -p android --profile production --auto-submit --non-interactive --no-wait
 
 build-all:
-	$(MAKE) build-prep DEST=NATIVE
+	$(MAKE) build-prep DEST=ALL
 	-eas build -p all --profile production --auto-submit --non-interactive --no-wait
 
 publish: build-prep

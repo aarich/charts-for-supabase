@@ -9,7 +9,6 @@ export { default as IconButton } from './IconButton';
 export * from './io';
 export { default as Layout } from './Layout';
 export { default as ListItem } from './ListItem';
-export { default as LoadingWrapper } from './LoadingWrapper';
 export { default as OutputTable } from './OutputTable';
 export { default as Toast } from './Toast';
 export { default as View } from './View';

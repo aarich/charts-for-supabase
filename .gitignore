@@ -9,8 +9,8 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-screenshots/*
 .env
+AppMockup
 
 scripts/deploy.sh
 

@@ -6,8 +6,15 @@ import FeedbackContainer from '../../containers/about/FeedbackContainer';
 import { setAppSetting } from '../../redux/actions';
 import { useSetting } from '../../redux/selectors';
 import { useAppDispatch } from '../../redux/store';
-import { AppSetting, Icons, IconType, log, MyConstants } from '../../utils';
-import { openTwitter, TWITTER_PROFILE } from './TwitterTimelineScreen';
+import {
+  AppSetting,
+  Icons,
+  IconType,
+  log,
+  MyConstants,
+  openTwitter,
+  TWITTER_PROFILE,
+} from '../../utils';
 
 const FeedbackScreen = () => {
   const hasRequestedReview = useSetting(AppSetting.HAS_REQUESTED_REVIEW);
