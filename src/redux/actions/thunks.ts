@@ -61,11 +61,9 @@ export const saveQuery =
     return query.id;
   };
 
-export const saveConnection =
-  (config: ConnectionInfo, password: string): AppThunk =>
+export const saveSchema =
+  (config: ConnectionInfo): AppThunk =>
   async (dispatch) => {
-    connection.init(config, password);
-
     const { url, key } = config;
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
       throw new Error('Invalid URL');
@@ -73,17 +71,10 @@ export const saveConnection =
 
     const schemaUrl = `${url}/rest/v1/?apikey=${key}`;
     const response = await fetch(schemaUrl);
-    const { headers, status, statusText } = response;
-    const contentType = headers.get('content-type');
+    const contentType = response.headers.get('content-type');
     if (!contentType || !contentType.includes('json')) {
-      const text = await response.text();
-      log('Error connecting to Supabase', {
-        schemaUrl,
-        headers,
-        status,
-        statusText,
-        responseBody: text,
-      });
+      const responseBody = await response.text();
+      log('Error connecting to Supabase', { schemaUrl, responseBody });
       throw new Error(
         `Error connecting to Supabase. ${Platform.select({
           web: 'Check console for details.',
@@ -93,6 +84,7 @@ export const saveConnection =
         })}`
       );
     }
+
     const schema = await response.json();
 
     if (schema.message) {
@@ -100,6 +92,16 @@ export const saveConnection =
     }
 
     dispatch(setAppSetting({ [AppSetting.SUPABASE_SCHEMA]: schema }));
+    return Promise.resolve();
+  };
+
+export const saveConnection =
+  (config: ConnectionInfo, password: string): AppThunk =>
+  async (dispatch) => {
+    await connection.init(config, password);
+
+    await dispatch(saveSchema(config));
+
     dispatch(setAppSetting({ [AppSetting.SUPABASE_CONFIG]: config }));
     savePassword(password);
 

@@ -1,9 +1,10 @@
+import { setString } from 'expo-clipboard';
 import { useCallback, useEffect } from 'react';
 import { Platform, StyleSheet } from 'react-native';
 import connection from '../../api/database';
 import { Button, CenteredModal, View } from '../../components/base';
 import SupabaseConfig from '../../components/connections/SupabaseConfig';
-import { saveConnection } from '../../redux/actions';
+import { saveConnection, saveSchema } from '../../redux/actions';
 import { useSetting } from '../../redux/selectors';
 import { useAppDispatch } from '../../redux/store';
 import {
@@ -30,6 +31,7 @@ const SupabaseConfigModalContainer = ({
   setDraft,
 }: Props) => {
   const storedConfig = useSetting(AppSetting.SUPABASE_CONFIG);
+  const schema = useSetting(AppSetting.SUPABASE_SCHEMA);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -56,9 +58,22 @@ const SupabaseConfigModalContainer = ({
   const canSave = draft.key && draft.url;
 
   useEffect(() => {
-    storedConfig && connection.init(storedConfig, draft.password);
+    if (storedConfig) {
+      connection.init(storedConfig, draft.password).catch(handleError);
+      if (!schema) {
+        dispatch(saveSchema(storedConfig));
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const user = connection.get()?.user;
+
+  const onCopyUserId = () => {
+    user && setString(user.id);
+    toast('Copied!');
+    onClose();
+  };
 
   return (
     <CenteredModal
@@ -71,8 +86,17 @@ const SupabaseConfigModalContainer = ({
         draft={draft}
         onUpdate={(key: keyof ConnectionDraft) => (value: string) =>
           setDraft((old) => ({ ...old, [key]: value }))}
+        user={user}
       />
       <View row right style={styles.buttons}>
+        {user ? (
+          <Button
+            label="Copy User Id"
+            ghost
+            status="basic"
+            onPress={onCopyUserId}
+          />
+        ) : undefined}
         <Button
           label="Cancel"
           outline

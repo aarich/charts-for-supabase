@@ -15,10 +15,10 @@ import ChartSeriesContent from './ChartSeriesContent';
 
 type Props = {
   chart: DashboardChart;
-  onPressError?: VoidFunction;
-  onPressOptions?: VoidFunction;
   loading: boolean;
   data: PostgrestResponse<Record<string, unknown>> | undefined;
+  onPressError?: VoidFunction;
+  onPressOptions: VoidFunction;
 };
 
 const Chart = forwardRef<RNView, Props>(

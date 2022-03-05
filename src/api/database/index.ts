@@ -10,7 +10,13 @@ const connection: {
   async init(config, password) {
     connection.current?.destroy();
     connection.current = new SupabaseConnection(config.url, config.key);
-    connection.current.signIn(config.email, password);
+    try {
+      await connection.current.signIn(config.email, password);
+    } catch (e) {
+      connection.current.destroy();
+      connection.current = undefined;
+      throw e;
+    }
   },
   get: () => connection.current,
 };

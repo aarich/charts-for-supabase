@@ -27,7 +27,7 @@ export class SupabaseConnection {
     this.supabase.auth.session() && this.supabase.auth.signOut();
   }
 
-  signIn(email: string, password: string) {
+  async signIn(email: string, password: string) {
     if (
       !password ||
       this.supabase.auth.user()?.email?.toLowerCase() === email.toLowerCase()
@@ -36,10 +36,10 @@ export class SupabaseConnection {
       return;
     }
     log('Signing in to supabase.', { email });
-    this.supabase.auth
-      .signIn({ email, password })
-      .then(({ error }) => error && handleError(error))
-      .catch(handleError);
+    const { error } = await this.supabase.auth.signIn({ email, password });
+    if (error) {
+      throw error;
+    }
   }
 
   signOut() {

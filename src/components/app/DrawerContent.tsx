@@ -4,12 +4,10 @@ import {
   DrawerItem,
   MenuItemProps,
 } from '@ui-kitten/components';
-import { setString } from 'expo-clipboard';
 import { ReactElement } from 'react';
 import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import connection from '../../api/database';
 import {
-  alert,
   IconsOutlined,
   IconType,
   MyConstants,
@@ -17,7 +15,6 @@ import {
   RootStackParamList,
   showConnectionSettings,
   Spacings,
-  toast,
 } from '../../utils';
 import { Badge, Icon, Text, View } from '../base';
 
@@ -28,18 +25,13 @@ type Props = {
   style?: StyleProp<ViewStyle>;
 };
 
-const CONNECTION = 'Edit Connection';
 const RESET = 'Reset App';
 const UPDATES = 'Updates';
 
 type MenuItem = {
   icon: IconType;
   title?: string;
-  dest:
-    | keyof RootStackParamList
-    | typeof CONNECTION
-    | typeof RESET
-    | typeof UPDATES;
+  dest: keyof RootStackParamList | typeof RESET | typeof UPDATES;
 };
 
 const items: MenuItem[] = [
@@ -63,10 +55,6 @@ export function DrawerContent({
 }: Props) {
   const onPressItem = (dest: MenuItem['dest']) => {
     switch (dest) {
-      case CONNECTION:
-        onToggleDrawer();
-        showConnectionSettings();
-        break;
       case RESET:
         onToggleDrawer();
         onResetApp();
@@ -77,34 +65,11 @@ export function DrawerContent({
         break;
       default:
         onGoToScreen(dest);
-
         break;
     }
   };
 
   const client = connection.get();
-  const user = client?.user;
-
-  const onPressConnection = () => {
-    const edit = {
-      text: 'Edit Connection',
-      onPress: () => onPressItem(CONNECTION),
-    };
-    if (user) {
-      alert('', `Logged in as ${user.email}\n${user.id}`, [
-        {
-          text: 'Copy User Id',
-          onPress: () => {
-            setString(user.id);
-            toast('Copied!');
-          },
-        },
-        edit,
-      ]);
-    } else {
-      alert('', client ? 'Not logged in as a user' : 'Not connected', [edit]);
-    }
-  };
 
   const renderItem = ({
     icon,
@@ -140,7 +105,7 @@ export function DrawerContent({
             <Badge
               label={`${client ? '' : 'Not '} Connected to Supabase`}
               status={client ? 'success' : 'danger'}
-              onPress={onPressConnection}
+              onPress={() => showConnectionSettings()}
               size="small"
             />
           </View>

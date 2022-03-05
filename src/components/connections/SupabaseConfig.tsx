@@ -1,19 +1,17 @@
+import { User } from '@supabase/supabase-js';
 import { StyleSheet } from 'react-native';
 import { ConnectionDraft, Spacings } from '../../utils';
 import { Text, TextField } from '../base';
 
 type Props = {
   draft: ConnectionDraft;
+  user?: User | null;
   onUpdate: (key: keyof ConnectionDraft) => (newValue: string) => void;
 };
 
-const SupabaseConfig = ({ draft, onUpdate }: Props) => {
+const SupabaseConfig = ({ draft, user, onUpdate }: Props) => {
   return (
     <>
-      <Text>
-        Reminder: this connection has the same privileges as an end user, so RLS
-        policies apply.
-      </Text>
       <TextField
         label="Supabase URL"
         value={draft.url}
@@ -52,6 +50,12 @@ const SupabaseConfig = ({ draft, onUpdate }: Props) => {
         placeholder="optional"
         style={styles.item}
       />
+      {user ? (
+        <Text>
+          Logged in as {user.email ?? ''}: {user.id}
+          {'\n'}
+        </Text>
+      ) : undefined}
     </>
   );
 };

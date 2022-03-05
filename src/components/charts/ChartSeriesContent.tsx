@@ -1,6 +1,11 @@
 import { useMemo } from 'react';
 import { ScalePropType } from 'victory-core';
-import { VictoryAxis, VictoryChart, VictoryLine } from 'victory-native';
+import {
+  VictoryAxis,
+  VictoryChart,
+  VictoryContainer,
+  VictoryLine,
+} from 'victory-native';
 import { formatNumber, QueryReturnLinear } from '../../utils';
 import { useChartTheme } from '../../utils/hooks';
 
@@ -51,6 +56,7 @@ const ChartSeriesContent = ({
       width={width}
       height={height}
       scale={{ x: scale, y: 'linear' }}
+      containerComponent={<VictoryContainer disableContainerEvents />}
     >
       <VictoryLine
         data={data}

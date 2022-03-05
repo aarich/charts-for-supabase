@@ -1,6 +1,6 @@
 import { getPathFromState, LinkingOptions } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
-import { DrawerParamList } from '../utils/types';
+import { DrawerParamList, RootStackParamList } from '../utils';
 
 type Options = LinkingOptions<DrawerParamList>;
 
@@ -31,9 +31,10 @@ const LinkingConfiguration: Options = {
       typeof innerState?.index === 'number' &&
       innerState?.routes[innerState.index].name === 'QueryEdit'
     ) {
-      const { params } = innerState.routes[innerState.index];
+      const { params } = innerState.routes[innerState.index] as {
+        params: RootStackParamList['QueryEdit'];
+      };
 
-      // @ts-ignore
       if (!params || !('id' in params) || !params.id) {
         return '/queries/new';
       }

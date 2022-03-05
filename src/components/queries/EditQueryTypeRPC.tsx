@@ -9,6 +9,7 @@ import {
   RPCQueryInfo,
   UpdateState,
 } from '../../utils';
+import { useRPCParams } from '../../utils/hooks';
 import { Button, DropdownPicker, View } from '../base';
 import EditQueryTypeRPCParam from './EditQueryTypeRPCParam';
 
@@ -47,6 +48,8 @@ const EditQueryTypeRPC = ({ onUpdate, draft }: Props) => {
     }
   }, [draft.rpc, names, onUpdate]);
 
+  const rpcParams = useRPCParams(draft.rpc);
+
   return (
     <>
       <DropdownPicker
@@ -70,14 +73,16 @@ const EditQueryTypeRPC = ({ onUpdate, draft }: Props) => {
           }}
         />
       ))}
-      <View center row>
-        <Button
-          ghost
-          label="Add Parameter"
-          onPress={onAdd}
-          icon={{ name: Icons.plusCircle }}
-        />
-      </View>
+      {Object.keys(rpcParams || {}).length ? (
+        <View center row>
+          <Button
+            ghost
+            label="Add Parameter"
+            onPress={onAdd}
+            icon={{ name: Icons.plusCircle }}
+          />
+        </View>
+      ) : undefined}
     </>
   );
 };
