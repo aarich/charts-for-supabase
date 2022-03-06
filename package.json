@@ -3,11 +3,6 @@
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "eject": "expo eject",
     "test": "jest --watchAll"
   },
   "jest": {
@@ -42,11 +37,9 @@
     "expo-updates": "~0.11.6",
     "expo-web-browser": "~10.1.1",
     "immer": "^9.0.12",
-    "openapi-types": "^10.0.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
-    "react-native-chart-kit": "^6.12.0",
     "react-native-gesture-handler": "~2.1.0",
     "react-native-get-random-values": "~1.7.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
@@ -84,6 +77,7 @@
     "eslint-plugin-restrict-imports": "^0.0.3",
     "jest": "^26.6.3",
     "jest-expo": "~44.0.1",
+    "openapi-types": "^10.0.0",
     "react-test-renderer": "17.0.1",
     "typescript": "~4.6.2"
   },
