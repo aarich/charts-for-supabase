@@ -3,7 +3,7 @@
     <img src="https://github.com/aarich/charts-for-supabase/raw/master/assets/images/icon512.png" width="100" heigth="100" alt="App Icon">
   </a>
 
-  <h2 align="center">Charts</h2>
+  <h1 align="center">Charts</h1>
   <h4 align="center">An open source analytics client for Supabase Database</h4>
 </p>
 
@@ -23,9 +23,9 @@
 </div>
 
 <p align="center">
-    <img alt="Screenshot 1" src="https://github.com/aarich/charts-for-supabase/raw/master/screenshots/12%20Home.png" width="20%">
-    <img alt="Screenshot 2" src="https://github.com/aarich/charts-for-supabase/raw/master/screenshots/12%20Query.png" width="20%">
-    <img alt="Screenshot 3" src="https://github.com/aarich/charts-for-supabase/raw/master/screenshots/12%20Edit.png" width="20%">
+    <img alt="Screenshot 1" src="https://github.com/aarich/charts-for-supabase/raw/master/screenshots/12%20Home.png" width="30%">
+    <img alt="Screenshot 2" src="https://github.com/aarich/charts-for-supabase/raw/master/screenshots/12%20Query.png" width="30%">
+    <img alt="Screenshot 3" src="https://github.com/aarich/charts-for-supabase/raw/master/screenshots/12%20Edit.png" width="30%">
 </p>
 
 ## About
@@ -34,7 +34,7 @@ Connect to your Supabase project using a public URL and key (and optionally as a
 
 ## How to Try It
 
-- [iOS App Store](https://apps.apple.com/app/apple-store/id1612680145?pt=117925864&ct=readme&mt=8) ![Pending](https://img.shields.io/badge/-pending-FFCF32?style=flat-square)
+- [iOS App Store](https://apps.apple.com/app/apple-store/id1612680145?pt=117925864&ct=readme&mt=8)
 - [Google Play Store](https://play.google.com/store/apps/details?id=rich.alex.charts) ![Pending](https://img.shields.io/badge/-pending-FFCF32?style=flat-square)
 - [Web](https://charts.mrarich.com)
 - [Expo Go](https://expo.dev/@mrarich/sbcharts)
