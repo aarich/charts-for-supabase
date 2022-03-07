@@ -32,15 +32,19 @@
 
 Connect to your Supabase project using a public URL and key (and optionally as an authenticated user) then create a dashboard to monitor key metrics.
 
-## How to Try It
+## Usage
 
-- [iOS App Store](https://apps.apple.com/app/apple-store/id1612680145?pt=117925864&ct=readme&mt=8)
-- [Google Play Store](https://play.google.com/store/apps/details?id=rich.alex.charts) ![Pending](https://img.shields.io/badge/-pending-FFCF32?style=flat-square)
-- [Web](https://charts.mrarich.com)
-- [Expo Go](https://expo.dev/@mrarich/sbcharts)
-- Locally (see next section)
+1. Start a Supabase Project
+   - See the [official docs](https://supabase.com/docs/guides/examples) for a list of great starting point ideas.
+1. Get the App
+   - [iOS App Store](https://apps.apple.com/app/apple-store/id1612680145?pt=117925864&ct=readme&mt=8)
+   - [Google Play Store](https://play.google.com/store/apps/details?id=rich.alex.charts)
+   - [Browser](https://charts.mrarich.com)
+   - [Expo Go](https://expo.dev/@mrarich/sbcharts)
+   - Locally (see next section)
+1. Follow the [instructions in the app](https://charts.mrarich.com/help)
 
-## Local Build Setup
+## Local Setup
 
 Clone the repository
 
