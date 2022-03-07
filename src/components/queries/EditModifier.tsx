@@ -7,20 +7,28 @@ import {
   ModifierType,
   Spacings,
 } from '../../utils';
+import { useColumnInfo, useColumns } from '../../utils/hooks';
 import { IconButton, View } from '../base';
 import EditModifierSingleOperator from './EditModifierSingleOperator';
 import EditModifierSingleValue from './EditModifierSingleValue';
 import EditModifierSort from './EditModifierSort';
 
 type Props = {
+  table: string | undefined;
   draft: Modifier;
   onUpdate: (updatedModifier: Modifier) => void;
   onRemove: VoidFunction;
 };
 
-const EditModifier = ({ onUpdate, draft, onRemove }: Props) => {
+const EditModifier = ({ table, draft, onUpdate, onRemove }: Props) => {
   const update = (key: string) => (value: string | boolean) =>
     onUpdate({ ...draft, [key]: value });
+
+  const columns = useColumns(table);
+  const columnInfo = useColumnInfo(
+    table,
+    'column' in draft ? draft.column : undefined
+  );
 
   const renderSettings = (): ReactElement => {
     switch (draft.type) {
@@ -35,6 +43,8 @@ const EditModifier = ({ onUpdate, draft, onRemove }: Props) => {
           <EditModifierSingleOperator
             column={draft.column}
             value={draft.value}
+            columnInfo={columnInfo}
+            columnOptions={columns}
             operator={getOperatorLabel(draft.type)}
             onUpdateColumn={update('column')}
             onUpdateValue={update('value')}
@@ -43,6 +53,8 @@ const EditModifier = ({ onUpdate, draft, onRemove }: Props) => {
       case ModifierType.IN:
         return (
           <EditModifierSingleOperator
+            columnInfo={columnInfo}
+            columnOptions={columns}
             column={draft.column}
             value={draft.values.join(',')}
             operator={getOperatorLabel(draft.type)}
@@ -65,10 +77,11 @@ const EditModifier = ({ onUpdate, draft, onRemove }: Props) => {
       case ModifierType.SORT:
         return (
           <EditModifierSort
-            by={draft.by}
+            columnOptions={columns}
+            column={draft.column}
             asc={draft.asc}
             onUpdateAsc={update('asc')}
-            onUpdateBy={update('by')}
+            onUpdateColumn={update('column')}
           />
         );
     }
@@ -85,7 +98,6 @@ const EditModifier = ({ onUpdate, draft, onRemove }: Props) => {
           onPress={onRemove}
         />
       </View>
-      {/* <Button ghost status="danger" label="Remove" onPress={onRemove} /> */}
     </View>
   );
 };

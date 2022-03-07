@@ -1,6 +1,8 @@
 export { default as Button } from './Button';
 export { default as Card } from './Card';
+export { default as DatePicker } from './DatePicker';
 export { default as Checkbox } from './FormCheckBox';
+export { default as Label } from './Label';
 export { default as ButtonGroupPicker } from './picker/ButtonGroupPicker';
 export { default as DropdownPicker } from './picker/DropdownPicker';
 export * from './picker/pickerTypes';

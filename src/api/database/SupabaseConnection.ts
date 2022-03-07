@@ -6,6 +6,7 @@ import {
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { OpenAPIV2 } from 'openapi-types';
 import {
+  formatParam,
   formatParams,
   handleError,
   log,
@@ -58,6 +59,7 @@ export class SupabaseConnection {
     schema: OpenAPIV2.Document | undefined
   ): PostgrestBuilder<Record<string, unknown>> {
     let stmt: PostgrestFilterBuilder<Record<string, unknown>>;
+    let columnInfos: Record<string, OpenAPIV2.SchemaObject> | undefined;
     if (qi.type === QueryType.RPC) {
       const params = formatParams(qi.rpc, qi.params, schema);
       stmt = this.supabase.rpc(qi.rpc, params);
@@ -67,11 +69,12 @@ export class SupabaseConnection {
           ? { count: qi.returnInfo.count, head: true }
           : undefined;
       stmt = this.supabase.from(qi.table).select(qi.select, options);
+      columnInfos = schema?.definitions?.[qi.table]?.properties;
     }
 
     if (qi.modifiers) {
       qi.modifiers.forEach(
-        (modifier) => (stmt = this._applyModifier(stmt, modifier))
+        (modifier) => (stmt = this._applyModifier(stmt, modifier, columnInfos))
       );
     }
 
@@ -80,25 +83,31 @@ export class SupabaseConnection {
 
   _applyModifier(
     stmt: PostgrestFilterBuilder<Record<string, unknown>>,
-    modifier: Modifier
+    modifier: Modifier,
+    columnInfos: Record<string, OpenAPIV2.SchemaObject> | undefined
   ): PostgrestFilterBuilder<Record<string, unknown>> {
+    const info =
+      'column' in modifier ? columnInfos?.[modifier.column] : undefined;
+    const formattedValue =
+      'value' in modifier ? formatParam(info, modifier.value) : undefined;
+
     switch (modifier.type) {
       case ModifierType.EQ:
-        return stmt.eq(modifier.column, modifier.value);
+        return stmt.eq(modifier.column, formattedValue);
       case ModifierType.NEQ:
-        return stmt.neq(modifier.column, modifier.value);
+        return stmt.neq(modifier.column, formattedValue);
       case ModifierType.LT:
-        return stmt.lt(modifier.column, modifier.value);
+        return stmt.lt(modifier.column, formattedValue);
       case ModifierType.GT:
-        return stmt.gt(modifier.column, modifier.value);
+        return stmt.gt(modifier.column, formattedValue);
       case ModifierType.LTE:
-        return stmt.lte(modifier.column, modifier.value);
+        return stmt.lte(modifier.column, formattedValue);
       case ModifierType.GTE:
-        return stmt.gte(modifier.column, modifier.value);
+        return stmt.gte(modifier.column, formattedValue);
       case ModifierType.LIMIT:
         return stmt.limit(parseInt(modifier.value));
       case ModifierType.SORT:
-        return stmt.order(modifier.by, { ascending: modifier.asc });
+        return stmt.order(modifier.column, { ascending: modifier.asc });
       case ModifierType.IN:
         return stmt.in(modifier.column, modifier.values);
       case ModifierType.LIKE:

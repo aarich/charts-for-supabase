@@ -44,7 +44,7 @@ const getDraft = (toEdit?: QueryInfo): QueryInfo =>
 const EditQueryContainer = ({ queryToEdit, onSaved, onCancel }: Props) => {
   const dispatch = useAppDispatch();
 
-  const [draft, setDraft] = useState<QueryInfo>(makeDefaultQueryInfo());
+  const [draft, setDraft] = useState(makeDefaultQueryInfo);
 
   useEffect(() => {
     setDraft(getDraft(queryToEdit));

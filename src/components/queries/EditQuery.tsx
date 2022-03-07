@@ -24,8 +24,8 @@ const EditQuery = ({ onUpdate, draft }: Props) => {
         onUpdate={(returnInfo) => onUpdate({ ...draft, returnInfo })}
       />
       <EditModifiers
-        draft={draft.modifiers}
-        onUpdate={(modifiers) => onUpdate({ ...draft, modifiers })}
+        draft={draft}
+        onUpdateModifiers={(modifiers) => onUpdate({ ...draft, modifiers })}
       />
     </>
   );

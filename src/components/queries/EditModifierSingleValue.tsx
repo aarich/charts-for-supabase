@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { KeyboardType, StyleSheet } from 'react-native';
 import { getOperatorLabel, ModifierType, Spacings } from '../../utils';
 import { Text, TextField, View } from '../base';
 
@@ -6,11 +6,13 @@ type Props = {
   modifierType: ModifierType;
   value: string;
   onUpdateValue: (value: string) => void;
+  keyboardType?: KeyboardType;
 };
 
 const EditModifierSingleValue = ({
   modifierType,
   value,
+  keyboardType = 'numeric',
   onUpdateValue,
 }: Props) => {
   return (
@@ -25,6 +27,7 @@ const EditModifierSingleValue = ({
         autoCapitalize="none"
         autoCorrect={false}
         placeholder="value"
+        keyboardType={keyboardType}
       />
     </>
   );

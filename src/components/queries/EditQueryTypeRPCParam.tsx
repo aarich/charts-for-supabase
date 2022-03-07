@@ -6,11 +6,11 @@ import {
   Checkbox,
   DropdownPicker,
   IconButton,
+  Label,
   TextField,
   toOptions,
   View,
 } from '../base';
-import Label from '../base/io/Label';
 
 type Props = {
   rpc: string;

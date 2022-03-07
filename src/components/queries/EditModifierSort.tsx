@@ -1,28 +1,36 @@
 import { StyleSheet } from 'react-native';
 import { Spacings } from '../../utils';
-import { Checkbox, Text, TextField, View } from '../base';
+import { Checkbox, Text, View } from '../base';
+import ColumnPicker from './ColumnPicker';
 
 type Props = {
-  by: string;
+  column: string;
   asc: boolean;
-  onUpdateBy: (by: string) => void;
+  columnOptions: string[] | undefined;
+  onUpdateColumn: (by: string) => void;
   onUpdateAsc: (asc: boolean) => void;
 };
 
-const EditModifierSort = ({ by, asc, onUpdateAsc, onUpdateBy }: Props) => {
+const EditModifierSort = ({
+  column,
+  asc,
+  columnOptions,
+  onUpdateAsc,
+  onUpdateColumn,
+}: Props) => {
   return (
     <>
       <View center style={styles.operator}>
         <Text>SORT BY</Text>
       </View>
-      <TextField
+
+      <ColumnPicker
+        column={column}
+        columnOptions={columnOptions}
+        onUpdate={onUpdateColumn}
         style={styles.flex}
-        value={by}
-        onChangeText={onUpdateBy}
-        autoCapitalize="none"
-        autoCorrect={false}
-        placeholder="column"
       />
+
       <Checkbox
         title="ASC"
         checked={asc}

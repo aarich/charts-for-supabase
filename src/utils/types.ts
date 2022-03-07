@@ -139,7 +139,7 @@ type SingleValueModifier = {
 };
 type SortModifier = {
   type: ModifierType.SORT;
-  by: string;
+  column: string;
   asc: boolean;
 };
 type InModifier = {

@@ -103,7 +103,7 @@ export function DrawerContent({
           <Text h1>{MyConstants.manifest?.name}</Text>
           <View style={styles.connected}>
             <Badge
-              label={`${client ? '' : 'Not '} Connected to Supabase`}
+              label={`${client ? '' : 'Not '}Connected to Supabase`}
               status={client ? 'success' : 'danger'}
               onPress={() => showConnectionSettings()}
               size="small"

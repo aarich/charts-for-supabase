@@ -1,11 +1,12 @@
 import { OpenAPIV2 } from 'openapi-types';
 import { useSetting } from '../../redux/selectors';
 import {
+  getColumnInfo,
   getColumns,
   getRPCNames,
   getRPCParamInfo,
   getTableAndViewNames,
-} from '../openapi';
+} from '../schema';
 import { AppSetting } from '../types';
 
 export const useSchema = () => useSetting(AppSetting.SUPABASE_SCHEMA);
@@ -17,6 +18,12 @@ export const useTableNames = (): string[] | undefined =>
 
 export const useColumns = (table: string | undefined): string[] | undefined =>
   getColumns(table, useSchema()?.definitions);
+
+export const useColumnInfo = (
+  table: string | undefined,
+  column: string | undefined
+): OpenAPIV2.SchemaObject | undefined =>
+  getColumnInfo(table, column, useSchema());
 
 export const useRPCParams = (
   rpc: string

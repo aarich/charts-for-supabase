@@ -6,15 +6,16 @@ import {
   Modifiers,
   ModifierType,
   prompt,
+  QueryInfo,
+  QueryType,
   Spacings,
 } from '../../utils';
-import { Button, View } from '../base';
-import Label from '../base/io/Label';
+import { Button, Label, View } from '../base';
 import EditModifier from './EditModifier';
 
 type Props = {
-  draft: Modifiers | undefined;
-  onUpdate: (updates: Modifiers) => void;
+  draft: QueryInfo;
+  onUpdateModifiers: (updates: Modifiers) => void;
 };
 
 const getDefaultModifier = (modifierType: ModifierType): Modifier => {
@@ -30,45 +31,48 @@ const getDefaultModifier = (modifierType: ModifierType): Modifier => {
     case ModifierType.LIMIT:
       return { type: modifierType, value: '' };
     case ModifierType.SORT:
-      return { type: modifierType, by: '', asc: true };
+      return { type: modifierType, column: '', asc: true };
     case ModifierType.IN:
       return { type: modifierType, column: '', values: [] };
   }
 };
 
-const EditModifiers = ({ onUpdate, draft = [] }: Props) => {
+const EditModifiers = ({ onUpdateModifiers: onUpdate, draft }: Props) => {
+  const { modifiers = [] } = draft;
+
   const replaceAtIndex = (newModifer: Modifier, index: number) => {
-    const before = draft.slice(0, index);
-    const after = draft.slice(index + 1);
+    const before = modifiers.slice(0, index);
+    const after = modifiers.slice(index + 1);
     onUpdate([...before, newModifer, ...after]);
   };
 
   const removeAtIndex = (index: number) => {
-    const before = draft.slice(0, index);
-    const after = draft.slice(index + 1);
+    const before = modifiers.slice(0, index);
+    const after = modifiers.slice(index + 1);
     onUpdate([...before, ...after]);
   };
 
   const onAdd = async () => {
-    const [value, cancelled] = await prompt('', 'Choose a modifier type', {
+    const [newType, cancelled] = await prompt('', 'Choose a modifier type', {
       options: Object.values(ModifierType).map((value) => ({
         label: getOperatorLabel(value),
         value,
       })),
     });
     if (!cancelled) {
-      onUpdate([...draft, getDefaultModifier(value as ModifierType)]);
+      onUpdate([...modifiers, getDefaultModifier(newType as ModifierType)]);
     }
   };
 
   return (
     <>
       <Label label="Modifiers" style={styles.item} />
-      {draft?.map((draft, index) => (
+      {modifiers.map((modifier, index) => (
         <EditModifier
           key={index}
-          draft={draft}
-          onUpdate={(modifier) => replaceAtIndex(modifier, index)}
+          table={draft.type === QueryType.SELECT ? draft.table : undefined}
+          draft={modifier}
+          onUpdate={(updated) => replaceAtIndex(updated, index)}
           onRemove={() => removeAtIndex(index)}
         />
       ))}
