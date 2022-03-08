@@ -33,22 +33,29 @@ const ChartContainer = ({ chart }: Props) => {
     });
   };
 
-  const onPressError = error
-    ? () =>
-        alert(
-          'Query Error',
-          `An error occurred executing the query "${query?.name}"\n\n${error?.message}`,
-          [
-            { text: 'Edit Query', onPress: onGoToQuery },
+  const onPressError =
+    error || !query
+      ? () => {
+          const title = query ? 'Query Error' : 'Query Not Found';
+          const message = query
+            ? `An error occurred executing the query "${query?.name}"\n\n${error?.message}`
+            : 'Did you delete this query?';
+          const options: AlertButton[] = [
             {
               text: 'Edit Dashboard',
               onPress: () => navigation.push('HomeEdit'),
             },
-            { text: 'Retry', onPress: () => refetch() },
-          ],
-          'Ignore'
-        )
-    : undefined;
+          ];
+
+          if (query) {
+            options.push(
+              { text: 'Edit Query', onPress: onGoToQuery },
+              { text: 'Retry', onPress: () => refetch() }
+            );
+          }
+          alert(title, message, options, 'Ignore');
+        }
+      : undefined;
 
   const onPressOptions = () =>
     alert(`${query?.name}`, undefined, [

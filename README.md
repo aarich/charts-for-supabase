@@ -14,7 +14,9 @@
   <a href="https://play.google.com/store/apps/details?id=rich.alex.charts">
     <img alt="Download on Google Play" title="Play Store" src="https://github.com/aarich/charts-for-supabase/raw/master/assets/images/getItOnGooglePlay.png" width="150">
   </a>
-  <br>
+  </div>
+
+<div align="center">
 
 [![Built with Expo](https://img.shields.io/badge/Built%20with%20Expo-informational.svg?style=flat-square&logo=EXPO)](https://github.com/expo/expo)
 [![Built with Supabase](https://img.shields.io/badge/Built%20with%20Supabase-informational.svg?style=flat-square&logo=SUPABASE)](https://supabase.com)
@@ -22,11 +24,11 @@
 
 </div>
 
-<p align="center">
+<div align="center">
     <img alt="Screenshot 1" src="https://github.com/aarich/charts-for-supabase/raw/master/screenshots/12%20Home.png" width="30%">
     <img alt="Screenshot 2" src="https://github.com/aarich/charts-for-supabase/raw/master/screenshots/12%20Query.png" width="30%">
     <img alt="Screenshot 3" src="https://github.com/aarich/charts-for-supabase/raw/master/screenshots/12%20Edit.png" width="30%">
-</p>
+</div>
 
 ## About
 
@@ -58,3 +60,11 @@ Install dependencies with [NPM](https://docs.npmjs.com/cli/v8/commands/npm)
 Start with [expo-cli](https://docs.expo.dev/workflow/expo-cli/)
 
     expo start
+
+## External Links
+
+[Visit @mr_arich on Twitter](https://twitter.com/mr_arich)
+
+[View on Product Hunt](https://www.producthunt.com/posts/charts-for-supabase)
+
+[Whattl, the app built with Supabase that inspired this one](https://whattl.mrarich.com/app)

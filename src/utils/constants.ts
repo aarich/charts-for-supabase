@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-restricted-imports
 import Constants from 'expo-constants';
 
-const myVersion = '9';
+const myVersion = '11';
 
 const IS_SCREENSHOTTING = false;
 

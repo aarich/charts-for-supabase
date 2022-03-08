@@ -1,10 +1,17 @@
 import { Fragment } from 'react';
+import { Platform } from 'react-native';
 import TextWall from '../../components/about/TextWall';
 import { a } from '../../components/base/Anchor';
 import { h4, p } from '../../components/base/io/Text';
 import { MyConstants } from '../../utils';
 
 const PRIVACY_URL = 'mrarich.com/privacy';
+
+const DREAMHOST = { name: 'Dreamhost', url: 'mrarich.com/url/dreamhostsb' };
+const RNW = {
+  name: 'React Native Web',
+  url: 'necolas.github.io/react-native-web',
+};
 
 const elements = [
   h4('Privacy Policy'),
@@ -24,8 +31,10 @@ const elements = [
     'Thanks to the following open source software and free services for making this project possible.'
   ),
   [
+    ...Platform.select({ web: [DREAMHOST], default: [] }),
     { name: 'Expo', url: 'expo.dev' },
     { name: 'React Native', url: 'reactnative.dev' },
+    ...Platform.select({ web: [RNW], default: [] }),
     { name: 'React Query', url: 'react-query.tanstack.com' },
     { name: 'Supabase', url: 'supabase.com' },
     { name: 'UI Kitten', url: 'akveo.github.io/react-native-ui-kitten' },

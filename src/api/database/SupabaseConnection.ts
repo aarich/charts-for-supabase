@@ -21,7 +21,10 @@ export class SupabaseConnection {
   supabase: SupabaseClient;
 
   constructor(url: string, key: string) {
-    this.supabase = createClient(url, key, { localStorage: AsyncStorage });
+    this.supabase = createClient(url, key, {
+      localStorage: AsyncStorage,
+      shouldThrowOnError: true,
+    });
   }
 
   destroy() {
@@ -78,7 +81,7 @@ export class SupabaseConnection {
       );
     }
 
-    return stmt.throwOnError();
+    return stmt;
   }
 
   _applyModifier(

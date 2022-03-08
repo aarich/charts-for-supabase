@@ -25,18 +25,17 @@ const Chart = forwardRef<RNView, Props>(
   ({ chart, loading, data, onPressError, onPressOptions }, ref) => {
     const query = useQuery(chart.queryId);
     const [layout, setLayout] = useState<LayoutRectangle>();
-    if (!query) {
-      return <Text>Query not found</Text>;
-    }
 
-    if (onPressError) {
+    if (onPressError || !query) {
       return (
         <Card
           onPress={onPressError}
           padded
-          footer={<Text category="p2">{query?.name}</Text>}
+          footer={query && <Text>{query?.name ?? chart.queryId}</Text>}
         >
-          <Text status="danger">Query Error</Text>
+          <Text status="danger">
+            {query ? 'Query Error' : 'Query Not Found'}
+          </Text>
           <Text category="c1">Tap for details</Text>
         </Card>
       );
