@@ -1,6 +1,8 @@
+import { PropsWithChildren, useEffect, useRef } from 'react';
+import { Animated, Easing, Platform, StyleSheet } from 'react-native';
+
 import { Modal } from '@ui-kitten/components';
-import { FC, useEffect, useRef } from 'react';
-import { Animated, Easing, StyleSheet } from 'react-native';
+
 import { useKeyboardSize } from '../../utils/hooks';
 import { Card, Text } from './io';
 
@@ -11,13 +13,13 @@ type Props = {
   avoidKeyboard?: boolean;
 };
 
-const CenteredModal: FC<Props> = ({
+const CenteredModal = ({
   visible,
   onRequestClose,
   children,
   title,
   avoidKeyboard,
-}) => {
+}: PropsWithChildren<Props>) => {
   const keyboardSize = useKeyboardSize();
   const paddingBottom = useRef(new Animated.Value(0));
 
@@ -39,7 +41,7 @@ const CenteredModal: FC<Props> = ({
       backdropStyle={styles.backdrop}
     >
       <Animated.View style={{ paddingBottom: paddingBottom.current }}>
-        <Card style={styles.card} padded disabled>
+        <Card style={styles.card} padded disabled={Platform.OS !== 'web'}>
           {title ? (
             <Text category="h5" center>
               {title}

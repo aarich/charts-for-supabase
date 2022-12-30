@@ -1,8 +1,10 @@
-import { useLinkTo } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { parse, useURL } from 'expo-linking';
 import { useEffect } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { useLinkTo } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import { RootStackParamList, showConnectionSettings } from '../utils';
 import screens from './screens';
 import TopNavigation from './TopNavigation';
@@ -28,7 +30,11 @@ const RootStackNavigator = () => {
       }
 
       // We have received config from the url
-      showConnectionSettings({ key, url, email });
+      showConnectionSettings({
+        key: key as string | undefined,
+        url: url as string | undefined,
+        email: email as string | undefined,
+      });
     } else if (path) {
       linkTo('/' + path);
     }

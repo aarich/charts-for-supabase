@@ -1,14 +1,9 @@
 import { useCallback, useMemo } from 'react';
 import { FlatList, Platform, Pressable, StyleSheet } from 'react-native';
+
 import ChartEditContainer from '../../containers/home/ChartEditContainer';
 import { useQueries } from '../../redux/selectors';
-import {
-  DashboardRow,
-  IconsOutlined,
-  prompt,
-  QueryReturnType,
-  Spacings,
-} from '../../utils';
+import { DashboardRow, getIconForQuery, IconsOutlined, prompt, Spacings } from '../../utils';
 import { Button, Card, IconButton, Layout, PickerOption, View } from '../base';
 import RowEditFooterActions from './RowEditFooterActions';
 
@@ -37,10 +32,7 @@ const RowEdit = ({
       queries.map((q) => ({
         label: q.name,
         value: q.id,
-        icon:
-          q.returnInfo.type === QueryReturnType.COUNT
-            ? IconsOutlined.hash
-            : IconsOutlined.grid,
+        icon: getIconForQuery(q.returnInfo.type),
       })),
     [queries]
   );
@@ -73,7 +65,7 @@ const RowEdit = ({
   return (
     <View>
       <Card
-        disabled
+        disabled={Platform.OS !== 'web'}
         style={styles.container}
         header={
           <RowEditFooterActions

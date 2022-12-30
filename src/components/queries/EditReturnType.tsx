@@ -1,28 +1,24 @@
-import { useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
+
+import { Text } from '@ui-kitten/components';
+
+import { DEFAULT_TABLE_LIMIT } from '../../api/database/SupabaseConnection';
 import {
-  QueryReturnCount,
-  QueryReturnInfo,
-  QueryReturnLinear,
-  QueryReturnType,
-  Spacings,
+    ModifierType, QueryInfo, QueryReturnCount, QueryReturnInfo, QueryReturnLinear, QueryReturnType,
+    Spacings
 } from '../../utils';
 import { useColumns } from '../../utils/hooks';
-import {
-  DropdownPicker,
-  RadioGroupPicker,
-  TextField,
-  toOptions,
-  View,
-} from '../base';
+import { DropdownPicker, RadioGroupPicker, TextField, toOptions, View } from '../base';
 
 type Props = {
+  queryInfo: QueryInfo;
   table: string | undefined;
   draft: QueryReturnInfo;
   onUpdate: (updates: QueryReturnInfo) => void;
 };
 
-const EditReturnType = ({ onUpdate, draft, table }: Props) => {
+const EditReturnType = ({ onUpdate, draft, table, queryInfo }: Props) => {
   const columns = useColumns(table);
 
   const [cachedInfo, setCachedInfo] = useState<{
@@ -44,15 +40,18 @@ const EditReturnType = ({ onUpdate, draft, table }: Props) => {
       count = 'exact',
     } = cachedInfo;
 
-    if (draft.type === QueryReturnType.LINEAR) {
-      setCachedInfo({
-        ...cachedInfo,
-        xColumn: draft.xColumn,
-        yColumn: draft.yColumn,
-        scale: draft.scale,
-      });
-    } else if (draft.type === QueryReturnType.COUNT) {
-      setCachedInfo({ ...cachedInfo, count: draft.count });
+    switch (draft.type) {
+      case QueryReturnType.LINEAR:
+        setCachedInfo({
+          ...cachedInfo,
+          xColumn: draft.xColumn,
+          yColumn: draft.yColumn,
+          scale: draft.scale,
+        });
+        break;
+      case QueryReturnType.COUNT:
+        setCachedInfo({ ...cachedInfo, count: draft.count });
+        break;
     }
 
     switch (newType) {
@@ -61,6 +60,9 @@ const EditReturnType = ({ onUpdate, draft, table }: Props) => {
         break;
       case QueryReturnType.LINEAR:
         onUpdate({ type: newType, xColumn, yColumn, scale });
+        break;
+      case QueryReturnType.TABLE:
+        onUpdate({ type: newType });
         break;
     }
   };
@@ -81,8 +83,21 @@ const EditReturnType = ({ onUpdate, draft, table }: Props) => {
     }
   }, [columns, draft, onUpdate]);
 
-  const renderReturnTypeInfo = () => {
+  const renderReturnTypeInfo = (): ReactElement => {
     switch (draft.type) {
+      case QueryReturnType.TABLE:
+        return (
+          <View row center style={styles.item}>
+            {queryInfo.modifiers?.find(
+              (modifier) => modifier.type === ModifierType.LIMIT
+            ) ? null : (
+              <Text category="c2">
+                FYI: With no limit modifer, the default limit for a table is{' '}
+                {DEFAULT_TABLE_LIMIT}
+              </Text>
+            )}
+          </View>
+        );
       case QueryReturnType.COUNT:
         return (
           <View row>
@@ -162,6 +177,7 @@ const EditReturnType = ({ onUpdate, draft, table }: Props) => {
         options={[
           { label: 'Count', value: QueryReturnType.COUNT },
           { label: 'Linear', value: QueryReturnType.LINEAR },
+          { label: 'Table', value: QueryReturnType.TABLE },
         ]}
         selectedValue={draft.type}
         onValueChange={handleQueryReturnTypeChange}

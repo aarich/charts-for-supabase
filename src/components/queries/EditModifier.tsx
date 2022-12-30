@@ -1,12 +1,7 @@
 import { ReactElement } from 'react';
 import { StyleSheet } from 'react-native';
-import {
-  getOperatorLabel,
-  Icons,
-  Modifier,
-  ModifierType,
-  Spacings,
-} from '../../utils';
+
+import { getOperatorLabel, Icons, Modifier, ModifierType, Spacings } from '../../utils';
 import { useColumnInfo, useColumns } from '../../utils/hooks';
 import { IconButton, View } from '../base';
 import EditModifierSingleOperator from './EditModifierSingleOperator';

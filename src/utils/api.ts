@@ -1,13 +1,6 @@
 import {
-  Modifier,
-  Modifiers,
-  ModifierType,
-  QueryInfo,
-  QueryReturnInfo,
-  QueryReturnType,
-  QueryType,
-  RPCQueryInfo,
-  SelectQueryInfo,
+    Modifier, Modifiers, ModifierType, QueryInfo, QueryReturnInfo, QueryReturnType, QueryType,
+    RPCQueryInfo, SelectQueryInfo
 } from './types';
 
 export const getOperatorLabel = (op: ModifierType): string =>
@@ -33,6 +26,7 @@ const isRPCQueryValid = (draft: RPCQueryInfo): boolean =>
 const isQueryReturnValid = (draft: QueryReturnInfo): boolean => {
   switch (draft.type) {
     case QueryReturnType.COUNT:
+    case QueryReturnType.TABLE:
       return true;
     case QueryReturnType.LINEAR:
       return !!(draft.xColumn && draft.yColumn);
@@ -52,7 +46,7 @@ const isModifierValid = (modifier: Modifier): boolean => {
     case ModifierType.LIMIT:
       return !!modifier.value;
     case ModifierType.SORT:
-      return !!modifier.by;
+      return !!modifier.column;
     case ModifierType.IN:
       return !!(modifier.column && modifier.values);
   }

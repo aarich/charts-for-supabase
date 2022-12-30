@@ -1,5 +1,7 @@
-import { User } from '@supabase/supabase-js';
 import { StyleSheet } from 'react-native';
+
+import { User } from '@supabase/supabase-js';
+
 import { ConnectionDraft, Spacings } from '../../utils';
 import { Text, TextField } from '../base';
 
@@ -17,7 +19,7 @@ const SupabaseConfig = ({ draft, user, onUpdate }: Props) => {
         value={draft.url}
         onChangeText={onUpdate('url')}
         autoCapitalize="none"
-        autoCompleteType="off"
+        autoComplete="off"
         autoCorrect={false}
         style={styles.item}
       />
@@ -26,7 +28,7 @@ const SupabaseConfig = ({ draft, user, onUpdate }: Props) => {
         value={draft.key}
         onChangeText={onUpdate('key')}
         autoCapitalize="none"
-        autoCompleteType="off"
+        autoComplete="off"
         autoCorrect={false}
         style={styles.item}
       />
@@ -37,7 +39,7 @@ const SupabaseConfig = ({ draft, user, onUpdate }: Props) => {
         onChangeText={onUpdate('email')}
         keyboardType="email-address"
         autoCapitalize="none"
-        autoCompleteType="off"
+        autoComplete="off"
         autoCorrect={false}
         placeholder="optional"
         style={styles.item}

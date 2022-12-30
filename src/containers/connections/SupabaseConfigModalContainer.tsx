@@ -1,6 +1,7 @@
-import { setString } from 'expo-clipboard';
+import { setStringAsync } from 'expo-clipboard';
 import { useCallback, useEffect } from 'react';
 import { Platform, StyleSheet } from 'react-native';
+
 import connection from '../../api/database';
 import { Button, CenteredModal, View } from '../../components/base';
 import SupabaseConfig from '../../components/connections/SupabaseConfig';
@@ -8,13 +9,7 @@ import { saveConnection, saveSchema } from '../../redux/actions';
 import { useSetting } from '../../redux/selectors';
 import { useAppDispatch } from '../../redux/store';
 import {
-  AppSetting,
-  ConnectionDraft,
-  getSavedPassword,
-  handleError,
-  Spacings,
-  toast,
-  UpdateState,
+    AppSetting, ConnectionDraft, getSavedPassword, handleError, log, Spacings, toast, UpdateState
 } from '../../utils';
 
 type Props = {
@@ -70,9 +65,16 @@ const SupabaseConfigModalContainer = ({
   const user = connection.get()?.user;
 
   const onCopyUserId = () => {
-    user && setString(user.id);
-    toast('Copied!');
-    onClose();
+    user &&
+      setStringAsync(user.id)
+        .then(() => {
+          toast('Copied!');
+          onClose();
+        })
+        .catch((e) => {
+          log("Couldn't copy", e);
+          toast("Couldn't copy...", 'danger');
+        });
   };
 
   return (

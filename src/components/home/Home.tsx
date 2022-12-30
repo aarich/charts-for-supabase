@@ -1,6 +1,7 @@
-import { List } from '@ui-kitten/components';
+import { FlatList } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useIsFetching, useQueryClient } from 'react-query';
+
 import { DashboardRow } from '../../utils';
 import Row from './Row';
 
@@ -15,7 +16,7 @@ const Home = ({ rows }: Props) => {
   const isFetching = useIsFetching();
 
   return (
-    <List
+    <FlatList
       contentContainerStyle={{ paddingBottom }}
       data={rows}
       refreshing={isFetching > 0}

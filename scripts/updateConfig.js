@@ -19,11 +19,11 @@ if (['ALL', 'IOS'].includes(dest)) {
     ios.buildNumber = `${parseInt(config.expo.ios.buildNumber) + 1}`;
   }
   console.log(`\nios.buildNumber set to ${ios.buildNumber}\n`);
-} else if (['ALL', 'ANDROID'].includes(dest)) {
+}
+
+if (['ALL', 'ANDROID'].includes(dest)) {
   android.versionCode += 1;
   console.log(`\nandroid.versionCode set to ${android.versionCode}\n`);
-} else {
-  console.log('\nNo version/build number changes made\n');
 }
 
 expo.version = appRelease;
@@ -40,7 +40,7 @@ fs.readFile('src/utils/constants.ts', 'utf-8', (err, data) => {
   const match = /'(\d+)';/.exec(data)[0];
   const version = match.substring(1, match.length - 2);
 
-  var newFile = data.replace(/'\d+';/, `'${parseInt(version) + 1}';`);
+  const newFile = data.replace(/'\d+';/, `'${parseInt(version) + 1}';`);
   fs.writeFileSync('src/utils/constants.ts', newFile);
 });
 

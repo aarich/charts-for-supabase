@@ -5,7 +5,11 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "releaseChannel": "devclient",
+      "ios": {
+        "simulator": true
+      }
     },
     "preview": {
       "distribution": "internal",
@@ -17,7 +21,7 @@
       }
     },
     "production": {
-      "releaseChannel": "prod-1-0"
+      "releaseChannel": "prod-2-0"
     }
   },
   "submit": {

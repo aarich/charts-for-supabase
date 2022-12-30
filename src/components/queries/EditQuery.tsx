@@ -22,6 +22,7 @@ const EditQuery = ({ onUpdate, draft }: Props) => {
         table={draft.type === QueryType.SELECT ? draft.table : undefined}
         draft={draft.returnInfo}
         onUpdate={(returnInfo) => onUpdate({ ...draft, returnInfo })}
+        queryInfo={draft}
       />
       <EditModifiers
         draft={draft}

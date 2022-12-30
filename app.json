@@ -2,8 +2,7 @@
   "expo": {
     "name": "Charts",
     "slug": "sbcharts",
-    "version": "1.0",
-    "orientation": "portrait",
+    "version": "2.0",
     "icon": "./assets/images/icon.png",
     "scheme": "sbcharts",
     "userInterfaceStyle": "automatic",
@@ -26,7 +25,7 @@
       "**/*"
     ],
     "ios": {
-      "buildNumber": "2",
+      "buildNumber": "1",
       "supportsTablet": true,
       "bundleIdentifier": "com.mrarich.charts",
       "appStoreUrl": "https://apps.apple.com/app/apple-store/id1612680145?pt=117925864&ct=aj&mt=8",
@@ -47,11 +46,10 @@
       },
       "permissions": [
         "READ_EXTERNAL_STORAGE",
-        "WRITE_EXTERNAL_STORAGE",
-        "QUERY_ALL_PACKAGES"
+        "WRITE_EXTERNAL_STORAGE"
       ],
       "package": "rich.alex.charts",
-      "versionCode": 1
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/images/favicon.png",
@@ -62,6 +60,14 @@
           ]
         }
       }
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d2681c33-6cce-498c-8f3d-3048a29c6050"
+      }
+    },
+    "plugins": [
+      "@config-plugins/android-jsc-intl"
+    ]
   }
 }

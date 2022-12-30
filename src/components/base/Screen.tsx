@@ -1,10 +1,11 @@
-import { FC } from 'react';
+import { FC, PropsWithChildren } from 'react';
 import { Platform, useWindowDimensions, View } from 'react-native';
+
 import { useBackgroundColor } from '../../utils/hooks';
 
 export const MAX_WEB_WIDTH = 1000;
 
-const Screen: FC = ({ children }) => {
+const Screen = ({ children }: PropsWithChildren) => {
   const screenWidth = useWindowDimensions().width;
   const backgroundColor = useBackgroundColor(2);
   const style = [

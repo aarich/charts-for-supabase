@@ -1,21 +1,15 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {
-  PostgrestBuilder,
-  PostgrestFilterBuilder,
-} from '@supabase/postgrest-js';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { OpenAPIV2 } from 'openapi-types';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { PostgrestBuilder, PostgrestFilterBuilder } from '@supabase/postgrest-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
+
 import {
-  formatParam,
-  formatParams,
-  handleError,
-  log,
-  Modifier,
-  ModifierType,
-  QueryInfo,
-  QueryReturnType,
-  QueryType,
+    formatParam, formatParams, handleError, log, Modifier, ModifierType, QueryInfo, QueryReturnType,
+    QueryType
 } from '../../utils';
+
+export const DEFAULT_TABLE_LIMIT = 20;
 
 export class SupabaseConnection {
   supabase: SupabaseClient;
@@ -79,6 +73,14 @@ export class SupabaseConnection {
       qi.modifiers.forEach(
         (modifier) => (stmt = this._applyModifier(stmt, modifier, columnInfos))
       );
+    }
+
+    // For a table query without a limit, apply default of 20
+    if (
+      qi.returnInfo.type === QueryReturnType.TABLE &&
+      !qi.modifiers?.find((mod) => mod.type === ModifierType.LIMIT)
+    ) {
+      stmt = stmt.limit(DEFAULT_TABLE_LIMIT);
     }
 
     return stmt;

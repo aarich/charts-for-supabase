@@ -1,4 +1,5 @@
 import { PostgrestResponse } from '@supabase/supabase-js';
+
 import { DashboardState } from '../redux/reducers/DashboardReducer';
 import { QueryState } from '../redux/reducers/QueryReducer';
 import { QueryReturnType, QueryType } from './types';
@@ -20,6 +21,15 @@ const chartConfig = {
     scale: 'time',
   },
 };
+const tableConfig = {
+  type: QueryType.SELECT,
+  table: 'post',
+  select: 'date, avg_page_view',
+  returnInfo: {
+    type: QueryReturnType.TABLE,
+    columns: ['date', 'avg_page_view'],
+  },
+};
 
 const queryState = {
   usercount: { ...countConfig, id: 'usercount', name: 'Total Users' },
@@ -30,6 +40,11 @@ const queryState = {
     table: 'post',
   },
   posts: { ...chartConfig, id: 'posts', name: 'Posts Created' },
+  avgViews: {
+    ...tableConfig,
+    id: 'avgViews',
+    name: 'Average Page Views',
+  },
   notifications: {
     ...chartConfig,
     id: 'posts',
@@ -41,6 +56,7 @@ const dashboardState: DashboardState = {
   rows: [
     { charts: [{ queryId: 'usercount' }, { queryId: 'postcount' }] },
     { charts: [{ queryId: 'posts' }] },
+    { charts: [{ queryId: 'avgViews' }] },
     { charts: [{ queryId: 'notifications' }] },
   ],
 };
@@ -60,11 +76,12 @@ const start = Date.now() - (NUM_POINTS + 1) * MS_IN_DAY;
 
 const generateData = (
   min: number,
-  range: number
-): { date: string; count: number }[] => {
+  range: number,
+  name = 'count'
+): Record<string, number | string>[] => {
   return Array.from(Array(30)).map((v, i) => ({
     date: new Date(start + i * MS_IN_DAY).toISOString(),
-    count: Math.random() * range + Math.random() * min * i,
+    [name]: Math.random() * range + Math.random() * min * i,
   }));
 };
 
@@ -76,6 +93,7 @@ const data: Record<
   postcount: { ...defaultData, count: 103934 },
   posts: { ...defaultData, data: generateData(100, 7000) },
   notifications: { ...defaultData, data: generateData(50, 1000) },
+  avgViews: { ...defaultData, data: generateData(5, 30, 'avg_page_view') },
 };
 
 export const MOCK_DATA = {

@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
+
 import { useQuery } from '../../redux/selectors';
 import { DashboardChart, Spacings } from '../../utils';
 import { Card, Text, View } from '../base';
@@ -13,7 +14,7 @@ const ChartEdit = ({ chart, onRemove }: Props) => {
   const query = useQuery(chart.queryId);
 
   return (
-    <Card disabled padded style={styles.container}>
+    <Card disabled={Platform.OS !== 'web'} padded style={styles.container}>
       <View row>
         <View center>
           <Text>{query?.name}</Text>

@@ -24,16 +24,18 @@ const elements = [
     )
   ),
   h6('What information am I sharing?'),
-  p('All information you share and the queries you set up are stored locally.'),
+  p('All information you enter and the queries you set up are stored locally.'),
   h3('How do I start?'),
   h6('1. Connect to Supabase'),
   p(
-    'First, connect to Supabase. Paste your client URL and anon key into the connection settings. Optionally, authenticate to interact with the database as a user.'
+    'Paste your client URL and anon key into the connection settings. Optionally, authenticate to interact with the database as a user.'
   ),
   h6('2. Create a Query'),
   p(
-    'Queries are single database calls. Currently, you can either perform a SELECT statement on a table/view or you can call an RPC. Once the data is retrieved, specify how it is displayed',
-    "If you choose a COUNT query, you'll see a number displayed in the dashboard. Otherwise, set up the x and y axis for the chart based on the retrieved data.",
+    'Queries are single database calls. You can either execute a SELECT statement on a table/view or you can call an RPC. Once the data is retrieved, specify how it is displayed',
+    '• COUNT: get a simple number.',
+    '• CHART: set up the x and y axes for the chart',
+    '• TABLE: get a raw data table',
     'For example, suppose you have a view:',
     'SELECT COUNT(1) AS count, created_day FROM profile GROUP BY created_day',
     "To display a time chart for the above query, set the x column to 'created_day' and the y column as 'count'. Then, select time as the scale"

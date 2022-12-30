@@ -59,12 +59,10 @@ Install dependencies with [NPM](https://docs.npmjs.com/cli/v8/commands/npm)
 
 Start with [expo-cli](https://docs.expo.dev/workflow/expo-cli/)
 
-    expo start
+    npx expo start
 
 ## External Links
 
 [Visit @mr_arich on Twitter](https://twitter.com/mr_arich)
 
 [View on Product Hunt](https://www.producthunt.com/posts/charts-for-supabase)
-
-[Whattl, the app built with Supabase that inspired this one](https://whattl.mrarich.com/app)

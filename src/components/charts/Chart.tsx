@@ -1,17 +1,15 @@
+import { forwardRef, ReactElement, useState } from 'react';
+import { LayoutRectangle, Platform, StyleSheet, View as RNView } from 'react-native';
+
 import { PostgrestResponse } from '@supabase/postgrest-js';
 import { Layout, Spinner } from '@ui-kitten/components';
-import { forwardRef, ReactElement, useState } from 'react';
-import { LayoutRectangle, StyleSheet, View as RNView } from 'react-native';
+
 import { useQuery } from '../../redux/selectors';
-import {
-  DashboardChart,
-  IconsOutlined,
-  QueryReturnType,
-  Spacings,
-} from '../../utils';
+import { DashboardChart, IconsOutlined, QueryReturnType, Spacings } from '../../utils';
 import { Card, IconButton, Text, View } from '../base';
 import ChartCountContent from './ChartCountContent';
 import ChartSeriesContent from './ChartSeriesContent';
+import ChartTableContent from './ChartTableContent';
 
 type Props = {
   chart: DashboardChart;
@@ -56,6 +54,8 @@ const Chart = forwardRef<RNView, Props>(
       switch (returnInfo.type) {
         case QueryReturnType.COUNT:
           return <ChartCountContent count={data.count} />;
+        case QueryReturnType.TABLE:
+          return <ChartTableContent queryData={data.data} queryInfo={query} />;
         case QueryReturnType.LINEAR:
           return (
             <ChartSeriesContent
@@ -70,7 +70,7 @@ const Chart = forwardRef<RNView, Props>(
 
     return (
       <Card
-        onPress={onPressOptions}
+        disabled={Platform.OS !== 'web'}
         style={styles.card}
         header={
           <View row spread>

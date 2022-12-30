@@ -1,31 +1,15 @@
-import { List } from '@ui-kitten/components';
 import { Pressable, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {
-  IconsOutlined,
-  IconType,
-  QueryInfo,
-  QueryReturnType,
-  QueryType,
-} from '../../utils';
+
+import { List } from '@ui-kitten/components';
+
+import { getIconForQuery, IconsOutlined, QueryInfo, QueryReturnType, QueryType } from '../../utils';
 import { EmptyState, Icon, ListItem, View } from '../base';
 
 type Props = {
   queries: QueryInfo[];
   onGoToQuery: (id?: string) => void;
   onDuplicateQuery: (query: QueryInfo) => void;
-};
-
-const getIcon = (query: QueryInfo): IconType => {
-  if (query.returnInfo.type === QueryReturnType.COUNT) {
-    return IconsOutlined.hash;
-  }
-  switch (query.type) {
-    case QueryType.RPC:
-      return IconsOutlined.cube;
-    case QueryType.SELECT:
-      return IconsOutlined.grid;
-  }
 };
 
 const getLabel = (query: QueryInfo): string => {
@@ -76,7 +60,7 @@ const Queries = ({ queries, onGoToQuery, onDuplicateQuery }: Props) => {
               <Icon name={IconsOutlined.chevronRight} {...props} />
             </View>
           )}
-          icon={getIcon(query)}
+          icon={getIconForQuery(query.returnInfo.type)}
         />
       )}
     />

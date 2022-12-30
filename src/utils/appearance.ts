@@ -1,5 +1,8 @@
 import { TextProps } from '@ui-kitten/components';
 
+import { IconsOutlined, IconType } from './icons';
+import { QueryReturnType } from './types';
+
 export const formatNumber = (num: number, digits = 1) => {
   const lookup = [
     { value: 1, symbol: '' },
@@ -10,7 +13,7 @@ export const formatNumber = (num: number, digits = 1) => {
     { value: 1e15, symbol: 'P' },
     { value: 1e18, symbol: 'E' },
   ];
-  const rx = /\.0+$|(\.[\d]*[1-9])0+$/;
+  const rx = /\.0+$|(\.\d*[1-9])0+$/;
   const item = lookup
     .slice()
     .reverse()
@@ -47,3 +50,10 @@ export const getIconSize = (category?: TextProps['category']): number =>
         label: 12,
       }[category] || 12
     : 12;
+
+export const getIconForQuery = (returnType: QueryReturnType): IconType =>
+  ({
+    [QueryReturnType.COUNT]: IconsOutlined.hash,
+    [QueryReturnType.LINEAR]: IconsOutlined.activity,
+    [QueryReturnType.TABLE]: IconsOutlined.grid,
+  }[returnType]);

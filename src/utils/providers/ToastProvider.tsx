@@ -1,5 +1,7 @@
+import { createContext, Dispatch, PropsWithChildren, SetStateAction, useState } from 'react';
+
 import { EvaStatus } from '@ui-kitten/components/devsupport';
-import { createContext, Dispatch, FC, SetStateAction, useState } from 'react';
+
 import { Toast } from '../../components/base';
 import { toastFnRef } from '../interactions';
 
@@ -21,10 +23,10 @@ const defaultContext: ToastContextType = {
 
 const ToastContext = createContext<ToastContextType>(defaultContext);
 
-const ToastProvider: FC = ({ children }) => {
+const ToastProvider = ({ children }: PropsWithChildren) => {
   const [state, setState] = useState<ToastState>(defaultContext.state);
 
-  toastFnRef.current = (message, status = 'success', timeout) => {
+  toastFnRef.current = (message, status = 'success', timeout = 3000) => {
     setState({ visible: true, message, status });
     setTimeout(() => {
       setState((old) => ({ ...old, visible: false }));

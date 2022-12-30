@@ -1,20 +1,14 @@
-import {
-  DrawerNavigationProp,
-  DrawerScreenProps,
-} from '@react-navigation/drawer';
-import {
-  CompositeNavigationProp,
-  CompositeScreenProps,
-  NavigatorScreenParams,
-  ParamListBase,
-} from '@react-navigation/native';
-import {
-  NativeStackNavigationOptions,
-  NativeStackNavigationProp,
-  NativeStackScreenProps,
-} from '@react-navigation/native-stack';
 import { Dispatch, SetStateAction } from 'react';
 import { AlertButton } from 'react-native';
+
+import { DrawerNavigationProp, DrawerScreenProps } from '@react-navigation/drawer';
+import {
+    CompositeNavigationProp, CompositeScreenProps, NavigatorScreenParams, ParamListBase
+} from '@react-navigation/native';
+import {
+    NativeStackNavigationOptions, NativeStackNavigationProp, NativeStackScreenProps
+} from '@react-navigation/native-stack';
+
 import { IconType } from './icons';
 
 export type ValueOf<T> = T[keyof T];
@@ -64,7 +58,7 @@ export type RootStackNavigationProp<Screen extends keyof RootStackParamList> =
     DrawerNavigationProp<DrawerParamList>
   >;
 
-export const isValidParam = <T>(
+export const isValidParam = <T extends object>(
   k: string | number | symbol,
   obj: T
 ): k is keyof T => {
@@ -93,12 +87,14 @@ export enum QueryType {
 export enum QueryReturnType {
   COUNT = 'count',
   LINEAR = 'linear',
+  TABLE = 'table',
 }
 
 export type QueryReturnCount = {
   type: QueryReturnType.COUNT;
   count: 'planned' | 'exact' | 'estimated';
 };
+
 export type QueryReturnLinear = {
   type: QueryReturnType.LINEAR;
   xColumn: string;
@@ -106,7 +102,14 @@ export type QueryReturnLinear = {
   scale: 'time' | 'linear';
 };
 
-export type QueryReturnInfo = QueryReturnCount | QueryReturnLinear;
+export type QueryReturnTable = {
+  type: QueryReturnType.TABLE;
+};
+
+export type QueryReturnInfo =
+  | QueryReturnCount
+  | QueryReturnLinear
+  | QueryReturnTable;
 
 export enum ModifierType {
   EQ = 'eq',
