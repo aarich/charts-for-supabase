@@ -57,9 +57,14 @@ Install dependencies with [NPM](https://docs.npmjs.com/cli/v8/commands/npm)
 
     npm install
 
+Create a development client build
+
+    make build-ios-native # OR build-android-native
+    # Install in simulator/emulator
+
 Start with [expo-cli](https://docs.expo.dev/workflow/expo-cli/)
 
-    npx expo start
+    npx expo start --dev-client
 
 ## External Links
 
