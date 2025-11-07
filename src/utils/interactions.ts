@@ -95,13 +95,13 @@ export const handleError = (error: unknown) => {
   alert('Error', message);
 };
 
-export const TWITTER_PROFILE = 'mr_arich';
-const twitterProfileUrl = `https://twitter.com/${TWITTER_PROFILE}`;
+export const SOCIAL_PROFILE = 'alexrich.bsky.social';
+const profileUrl = `https://bsky.app/profile/${SOCIAL_PROFILE}`;
 
-export const openTwitter = () => {
+export const openSocialProfile = () => {
   if (Platform.OS === 'web') {
-    window.open(twitterProfileUrl, '_blank');
+    window.open(profileUrl, '_blank');
   } else {
-    openBrowserAsync(twitterProfileUrl);
+    openBrowserAsync(profileUrl);
   }
 };

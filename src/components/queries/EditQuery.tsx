@@ -1,5 +1,6 @@
 import { QueryInfo, QueryType, UpdateState } from '../../utils';
 import { TextField } from '../base';
+import EditHeaders from './EditHeaders';
 import EditModifiers from './EditModifiers';
 import EditQueryType from './EditQueryType';
 import EditReturnType from './EditReturnType';
@@ -27,6 +28,10 @@ const EditQuery = ({ onUpdate, draft }: Props) => {
       <EditModifiers
         draft={draft}
         onUpdateModifiers={(modifiers) => onUpdate({ ...draft, modifiers })}
+      />
+      <EditHeaders
+        draft={draft}
+        onUpdateHeaders={(headers) => onUpdate({ ...draft, headers })}
       />
     </>
   );

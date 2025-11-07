@@ -2,7 +2,7 @@
   "expo": {
     "name": "Charts",
     "slug": "sbcharts",
-    "version": "2.0",
+    "version": "3.0",
     "icon": "./assets/images/icon.png",
     "scheme": "sbcharts",
     "userInterfaceStyle": "automatic",
@@ -15,11 +15,11 @@
     },
     "updates": {
       "fallbackToCacheTimeout": 5000,
-      "enabled": true
+      "enabled": true,
+      "url": "https://u.expo.dev/d2681c33-6cce-498c-8f3d-3048a29c6050"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "buildNumber": "1",
       "supportsTablet": true,
       "bundleIdentifier": "com.mrarich.charts",
       "appStoreUrl": "https://apps.apple.com/app/apple-store/id1612680145?pt=117925864&ct=aj&mt=8",
@@ -37,11 +37,11 @@
         "backgroundColor": "#222B45"
       },
       "permissions": ["READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"],
-      "package": "rich.alex.charts",
-      "versionCode": 5
+      "package": "rich.alex.charts"
     },
     "web": {
       "favicon": "./assets/images/favicon.png",
+      "bundler": "metro",
       "build": {
         "babel": {
           "include": ["@ui-kitten/components"]
@@ -53,6 +53,14 @@
         "projectId": "d2681c33-6cce-498c-8f3d-3048a29c6050"
       }
     },
-    "plugins": ["@config-plugins/android-jsc-intl"]
+    "plugins": [
+      "expo-asset",
+      "expo-font",
+      "expo-secure-store",
+      "expo-web-browser"
+    ],
+    "runtimeVersion": {
+      "policy": "fingerprint"
+    }
   }
 }

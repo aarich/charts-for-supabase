@@ -11,7 +11,9 @@ const connection: {
     connection.current?.destroy();
     connection.current = new SupabaseConnection(config.url, config.key);
     try {
-      await connection.current.signIn(config.email, password);
+      if (config.email) {
+        await connection.current.signIn(config.email, password);
+      }
     } catch (e) {
       connection.current.destroy();
       connection.current = undefined;

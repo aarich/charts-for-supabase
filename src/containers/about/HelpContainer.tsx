@@ -3,7 +3,7 @@ import { a } from '../../components/base/Anchor';
 import { h3, h6, p } from '../../components/base/io/Text';
 import { MyConstants } from '../../utils';
 
-const appName = MyConstants.manifest?.name;
+const appName = MyConstants.expoConfig?.name;
 const elements = [
   h3(`What is this?`),
   p(

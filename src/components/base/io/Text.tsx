@@ -1,5 +1,5 @@
-import { Text as UIKText, TextElement, TextProps } from '@ui-kitten/components';
-import { ReactText } from 'react';
+import { TextElement, TextProps, Text as UIKText } from '@ui-kitten/components';
+import { ReactNode } from 'react';
 import { StyleSheet } from 'react-native';
 import { keyed } from '../../../utils';
 
@@ -95,7 +95,7 @@ const h6Helper = (value: string) => (
     {value}
   </Text>
 );
-const p = (...args: (ReactText | TextElement)[]) => (
+const p = (...args: (ReactNode | TextElement)[]) => (
   <Text style={styles.p} selectable>
     {args.every((n) => typeof n === 'string')
       ? Array.prototype.join.call(args, '\n\n')
@@ -103,7 +103,7 @@ const p = (...args: (ReactText | TextElement)[]) => (
   </Text>
 );
 
-export { p, h1Helper as h1, h3Helper as h3, h4Helper as h4, h6Helper as h6 };
+export { h1Helper as h1, h3Helper as h3, h4Helper as h4, h6Helper as h6, p };
 
 const styles = StyleSheet.create({
   h1: { padding: 16 },

@@ -1,12 +1,20 @@
 import { Dispatch, SetStateAction } from 'react';
 import { AlertButton } from 'react-native';
 
-import { DrawerNavigationProp, DrawerScreenProps } from '@react-navigation/drawer';
 import {
-    CompositeNavigationProp, CompositeScreenProps, NavigatorScreenParams, ParamListBase
+  DrawerNavigationProp,
+  DrawerScreenProps,
+} from '@react-navigation/drawer';
+import {
+  CompositeNavigationProp,
+  CompositeScreenProps,
+  NavigatorScreenParams,
+  ParamListBase,
 } from '@react-navigation/native';
 import {
-    NativeStackNavigationOptions, NativeStackNavigationProp, NativeStackScreenProps
+  NativeStackNavigationOptions,
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 
 import { IconType } from './icons';
@@ -164,6 +172,7 @@ interface BaseQueryInfo {
   name: string;
   modifiers?: Modifiers;
   returnInfo: QueryReturnInfo;
+  headers?: [string, string][];
 }
 
 export type Param = {

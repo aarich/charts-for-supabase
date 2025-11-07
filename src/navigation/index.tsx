@@ -27,7 +27,6 @@ export default () => {
           headerShown: false,
           drawerStyle: { backgroundColor },
         }}
-        useLegacyImplementation
       >
         <Drawer.Screen name="RootStack" component={RootStackNavigator} />
       </Drawer.Navigator>

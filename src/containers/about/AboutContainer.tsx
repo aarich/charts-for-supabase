@@ -50,16 +50,13 @@ const elements = [
   ),
   p(),
   p(
-    `Want to see your name here? ${MyConstants.manifest?.name} is open source! `,
+    `Want to see your name here? ${MyConstants.expoConfig?.name} is open source! `,
     a('github.com/aarich/charts-for-supabase', 'Check it out on GitHub'),
     ' and, if you like, make an improvement. We are also built on top of great open source software like the ones listed above.'
   ),
   p(),
-  p(
-    `Version ${MyConstants.version} © ${new Date(
-      Date.now()
-    ).getFullYear()} Alex Rich`
-  ),
+  p(`Version ${MyConstants.version}`),
+  p(`© ${new Date(Date.now()).getFullYear()} Alex Rich`),
 ];
 
 const AboutContainer = () => {

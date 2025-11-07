@@ -1,7 +1,14 @@
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 
-import { getOperatorLabel, Icons, Modifier, ModifierType, Spacings } from '../../utils';
+import {
+  getOperatorLabel,
+  Icons,
+  isBoolean,
+  Modifier,
+  ModifierType,
+  Spacings,
+} from '../../utils';
 import { useColumnInfo, useColumns } from '../../utils/hooks';
 import { IconButton, View } from '../base';
 import EditModifierSingleOperator from './EditModifierSingleOperator';
@@ -24,6 +31,18 @@ const EditModifier = ({ table, draft, onUpdate, onRemove }: Props) => {
     table,
     'column' in draft ? draft.column : undefined
   );
+
+  // Initialize boolean type to false
+  useEffect(() => {
+    if (
+      columnInfo &&
+      isBoolean(columnInfo) &&
+      'value' in draft &&
+      draft.value === ''
+    ) {
+      onUpdate({ ...draft, value: 'false' });
+    }
+  }, [columnInfo, draft, onUpdate]);
 
   const renderSettings = (): ReactElement => {
     switch (draft.type) {

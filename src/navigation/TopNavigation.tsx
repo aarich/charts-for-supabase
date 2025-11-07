@@ -4,6 +4,7 @@ import {
   Divider,
   TopNavigation as UIKTopNavigation,
   TopNavigationAction,
+  TextProps,
 } from '@ui-kitten/components';
 import { RenderProp } from '@ui-kitten/components/devsupport';
 import { Fragment, ReactNode } from 'react';
@@ -44,7 +45,7 @@ export default <T extends NativeStackHeaderProps>(topInsets: number) =>
       return undefined;
     }
 
-    let BackAction: RenderProp = () => (
+    let BackAction: RenderProp<never> = () => (
       <TopNavigationAction
         icon={(props) => <Icon {...props} name={Icons.menu} />}
         onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
@@ -97,7 +98,7 @@ export default <T extends NativeStackHeaderProps>(topInsets: number) =>
       <>
         <UIKTopNavigation
           style={{ paddingTop: topInsets }}
-          title={(props) => (
+          title={(props: TextProps) => (
             <Text {...props} style={[props?.style, { marginTop: topInsets }]}>
               {title || route.name}
             </Text>

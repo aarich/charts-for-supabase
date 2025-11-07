@@ -31,12 +31,18 @@ export default () => {
     margin: Spacings.s2,
   };
 
+  const screenshots = {
+    Home: require('../../../screenshots/12 Home.png'),
+    Query: require('../../../screenshots/12 Query.png'),
+    Edit: require('../../../screenshots/12 Edit.png'),
+  };
+
   const renderScreenshots = () => (
     <View row style={styles.screenshots} center>
       {['Home', 'Query', 'Edit'].map((n) => (
         <Image
           key={n}
-          source={require(`../../../screenshots/12 ${n}.png`)}
+          source={screenshots[n as keyof typeof screenshots]}
           style={imageStyle}
         />
       ))}
@@ -67,7 +73,7 @@ export default () => {
     <Layout l2 flex style={styles.container}>
       <ScrollView style={styles.scroll}>
         <Text h1 center>
-          {MyConstants.manifest?.name}
+          {MyConstants.expoConfig?.name}
         </Text>
         <Text category="h6" center>
           Custom Analytics Client for Supabase

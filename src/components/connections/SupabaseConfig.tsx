@@ -22,9 +22,10 @@ const SupabaseConfig = ({ draft, user, onUpdate }: Props) => {
         autoComplete="off"
         autoCorrect={false}
         style={styles.item}
+        placeholder="https://xyz.supabase.co"
       />
       <TextField
-        label="Supabase Anon Key"
+        label="Supabase API Key"
         value={draft.key}
         onChangeText={onUpdate('key')}
         autoCapitalize="none"

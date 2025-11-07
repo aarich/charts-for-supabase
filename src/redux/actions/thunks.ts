@@ -26,13 +26,17 @@ const validateReturnType = (
   count: number | null,
   returns: QueryReturnInfo
 ): void => {
-  if (data === null && count === null) {
+  if (
+    data === null &&
+    count === null &&
+    returns.type !== QueryReturnType.COUNT
+  ) {
     throw new Error('No data received');
   }
 
   switch (returns.type) {
     case QueryReturnType.COUNT:
-      if (typeof count !== 'number') {
+      if (typeof count !== 'number' && count !== null) {
         throw new Error("Didn't get count!");
       }
       return;

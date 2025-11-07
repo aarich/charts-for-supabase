@@ -79,6 +79,7 @@ const ChartTableContent = ({ queryData, queryInfo }: Props) => {
       <View style={{ height: Math.min(contentHeight, maxHeight) }}>
         <ScrollView onContentSizeChange={onScrollContentSizeChange}>
           {queryData?.map((item, i) => (
+            // @ts-expect-error
             <DataTable.Row key={i}>
               {columns.map((column) => (
                 <DataTable.Cell key={column}>

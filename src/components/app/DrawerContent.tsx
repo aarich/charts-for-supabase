@@ -11,7 +11,6 @@ import {
   IconsOutlined,
   IconType,
   MyConstants,
-  openTwitter,
   RootStackParamList,
   showConnectionSettings,
   Spacings,
@@ -26,12 +25,11 @@ type Props = {
 };
 
 const RESET = 'Reset App';
-const UPDATES = 'Updates';
 
 type MenuItem = {
   icon: IconType;
   title?: string;
-  dest: keyof RootStackParamList | typeof RESET | typeof UPDATES;
+  dest: keyof RootStackParamList | typeof RESET;
 };
 
 const items: MenuItem[] = [
@@ -43,7 +41,6 @@ const items: MenuItem[] = [
 const more: MenuItem[] = [
   { icon: IconsOutlined.info, dest: 'About' },
   { icon: IconsOutlined.bulb, dest: 'Feedback' },
-  { icon: IconsOutlined.twitter, dest: UPDATES },
   { icon: IconsOutlined.refresh, dest: RESET },
 ];
 
@@ -58,10 +55,6 @@ export function DrawerContent({
       case RESET:
         onToggleDrawer();
         onResetApp();
-        break;
-      case UPDATES:
-        onToggleDrawer();
-        openTwitter();
         break;
       default:
         onGoToScreen(dest);
@@ -100,7 +93,7 @@ export function DrawerContent({
       style={style}
       ListHeaderComponent={
         <View style={styles.sectionContainer}>
-          <Text h1>{MyConstants.manifest?.name}</Text>
+          <Text h1>{MyConstants.expoConfig?.name}</Text>
           <View style={styles.connected}>
             <Badge
               label={`${client ? '' : 'Not '}Connected to Supabase`}

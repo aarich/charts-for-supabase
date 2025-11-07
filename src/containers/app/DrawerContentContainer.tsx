@@ -4,7 +4,10 @@ import {
 } from '@react-navigation/drawer';
 import { memo, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
-import Animated from 'react-native-reanimated';
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { DrawerContent } from '../../components/app/DrawerContent';
 import { reset } from '../../redux/actions';
@@ -17,11 +20,17 @@ const DrawerContentContainer = (props: Props) => {
   const { navigation } = props;
   const dispatch = useAppDispatch();
 
-  const progress = useDrawerProgress() as Animated.Node<number>;
+  const progress = useDrawerProgress();
 
-  const translateX = Animated.interpolateNode(progress, {
-    inputRange: [0, 0.5, 0.7, 0.8, 1],
-    outputRange: [-100, -85, -70, -45, 0],
+  const animatedStyle = useAnimatedStyle(() => {
+    const translateX = interpolate(
+      progress.value,
+      [0, 0.5, 0.7, 0.8, 1],
+      [-100, -85, -70, -45, 0]
+    );
+    return {
+      transform: [{ translateX }],
+    };
   });
 
   const paddingTop = useSafeAreaInsets().top;
@@ -41,11 +50,9 @@ const DrawerContentContainer = (props: Props) => {
   }, [dispatch]);
 
   return (
-    <Animated.View
-      style={[styles.drawerContent, { transform: [{ translateX }] }]}
-    >
+    <Animated.View style={[styles.drawerContent, animatedStyle]}>
       <DrawerContent
-        onGoToScreen={(screen) => navigation.navigate(screen)}
+        onGoToScreen={(screen) => navigation.navigate('RootStack', { screen })}
         onToggleDrawer={() => navigation.toggleDrawer()}
         onResetApp={onResetApp}
         style={{ paddingTop }}

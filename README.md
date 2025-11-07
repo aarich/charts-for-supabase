@@ -42,32 +42,11 @@ Connect to your Supabase project using a public URL and key (and optionally as a
    - [iOS App Store](https://apps.apple.com/app/apple-store/id1612680145?pt=117925864&ct=readme&mt=8)
    - [Google Play Store](https://play.google.com/store/apps/details?id=rich.alex.charts)
    - [Browser](https://charts.mrarich.com)
-   - [Expo Go](https://expo.dev/@mrarich/sbcharts)
    - Locally (see next section)
 1. Follow the [instructions in the app](https://charts.mrarich.com/help)
 
-## Local Setup
-
-Clone the repository
-
-    git clone https://github.com/aarich/charts-for-supabase.git
-    cd charts-for-supabase
-
-Install dependencies with [NPM](https://docs.npmjs.com/cli/v8/commands/npm)
-
-    npm install
-
-Create a development client build
-
-    make build-ios-native # OR build-android-native
-    # Install in simulator/emulator
-
-Start with [expo-cli](https://docs.expo.dev/workflow/expo-cli/)
-
-    npx expo start --dev-client
-
 ## External Links
 
-[Visit @mr_arich on Twitter](https://twitter.com/mr_arich)
+[Visit @alexrich on Bluesky](https://bsky.app/profile/alexrich.bsky.social)
 
 [View on Product Hunt](https://www.producthunt.com/posts/charts-for-supabase)

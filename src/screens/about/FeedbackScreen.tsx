@@ -12,8 +12,8 @@ import {
   IconType,
   log,
   MyConstants,
-  openTwitter,
-  TWITTER_PROFILE,
+  openSocialProfile,
+  SOCIAL_PROFILE,
 } from '../../utils';
 
 const FeedbackScreen = () => {
@@ -56,9 +56,9 @@ const FeedbackScreen = () => {
   });
 
   buttons.push({
-    title: `Visit @${TWITTER_PROFILE}`,
+    title: `Visit @${SOCIAL_PROFILE}`,
     icon: Icons.twitter,
-    onPress: openTwitter,
+    onPress: openSocialProfile,
   });
 
   return <FeedbackContainer buttons={buttons} />;

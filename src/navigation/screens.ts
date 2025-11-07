@@ -29,6 +29,6 @@ export default asScreens<RootStackScreenInfo>([
   {
     name: 'App',
     screen: AppScreen,
-    options: { title: MyConstants.manifest?.name, headerShown: false },
+    options: { title: MyConstants.expoConfig?.name, headerShown: false },
   },
 ]);
