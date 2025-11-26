@@ -44,6 +44,18 @@ const EditQueryTypeSelect = ({ onUpdate, draft }: Props) => {
         style={styles.item}
         placeholder="* or comma separated list"
       />
+      {draft.returnInfo.type === 'table' ? (
+        <TextField
+          label="URL (optional)"
+          tooltip="Enter a template string. Use {{column}} to insert merge fields. Click on a row to open this URL in a browser."
+          value={draft.urlTemplate}
+          onChangeText={(urlTemplate) => onUpdate({ ...draft, urlTemplate })}
+          autoCapitalize="none"
+          autoCorrect={false}
+          style={styles.item}
+          placeholder="e.g. example.com/item/{{id}}"
+        />
+      ) : null}
     </>
   );
 };

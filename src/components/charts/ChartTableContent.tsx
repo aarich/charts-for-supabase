@@ -1,9 +1,18 @@
+import * as Clipboard from 'expo-clipboard';
+import { openBrowserAsync } from 'expo-web-browser';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ScrollView } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import { useSafeAreaFrame } from 'react-native-safe-area-context';
-
-import { formatNumber, QueryInfo, QueryType } from '../../utils';
+import {
+  alert,
+  ensureProtocol,
+  evaluateTemplate,
+  formatNumber,
+  QueryInfo,
+  QueryType,
+  toast,
+} from '../../utils';
 import { Text, View } from '../base';
 
 type Props = {
@@ -67,6 +76,33 @@ const ChartTableContent = ({ queryData, queryInfo }: Props) => {
     []
   );
 
+  const onPressCell = useCallback(
+    (row: Record<string, unknown>, value: unknown) => {
+      const hasUrl =
+        queryInfo.type === QueryType.SELECT && queryInfo.urlTemplate;
+      const formattedValue = formatValue(value);
+      const copy = () => {
+        Clipboard.setStringAsync(formattedValue);
+        toast('Copied!');
+      };
+
+      if (hasUrl) {
+        const url = evaluateTemplate(row, queryInfo.urlTemplate);
+        const open = () => {
+          // allow the modal to close first
+          setTimeout(() => openBrowserAsync(ensureProtocol(url)), 200);
+        };
+        alert(formattedValue, url, [
+          { text: 'Copy Value', onPress: copy },
+          { text: 'Open Link', onPress: open },
+        ]);
+      } else {
+        copy();
+      }
+    },
+    [queryInfo]
+  );
+
   return (
     <DataTable>
       <DataTable.Header>
@@ -82,7 +118,10 @@ const ChartTableContent = ({ queryData, queryInfo }: Props) => {
             // @ts-expect-error
             <DataTable.Row key={i}>
               {columns.map((column) => (
-                <DataTable.Cell key={column}>
+                <DataTable.Cell
+                  key={column}
+                  onPress={() => onPressCell(item, item[column])}
+                >
                   <Text category="c1">{formatValue(item[column])}</Text>
                 </DataTable.Cell>
               ))}

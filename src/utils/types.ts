@@ -190,6 +190,7 @@ export interface SelectQueryInfo extends BaseQueryInfo {
   select: string;
   table: string;
   type: QueryType.SELECT;
+  urlTemplate?: string;
 }
 
 export type QueryInfo = SelectQueryInfo | RPCQueryInfo;

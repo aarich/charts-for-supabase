@@ -9,6 +9,7 @@ import { OpenAPIV2 } from 'openapi-types';
 import {
   formatParam,
   formatParams,
+  getFieldsToSelect,
   handleError,
   log,
   Modifier,
@@ -82,7 +83,8 @@ export class SupabaseConnection {
         qi.returnInfo.type === QueryReturnType.COUNT
           ? { count: qi.returnInfo.count, head: true }
           : undefined;
-      stmt = this.supabase.from(qi.table).select(qi.select, options);
+      const fields = getFieldsToSelect(qi);
+      stmt = this.supabase.from(qi.table).select(fields, options);
       columnInfos = schema?.definitions?.[qi.table]?.properties;
     }
 
